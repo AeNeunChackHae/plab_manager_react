@@ -1,0 +1,47 @@
+/* Header 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.logo {
+    flex-grow: 1;
+}
+
+.plab-logo {
+    width: 150px;
+    /* 로고 이미지 크기 조절 */
+    height: auto;
+    /* 비율 유지 */
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* 아이콘 사이의 간격 */
+}
+
+.user-icon,
+.calendar-icon {
+    width: 30px;
+    /* 아이콘 크기 */
+    height: 30px;
+    object-fit: cover;
+    /* 이미지 비율 맞추기 */
+    cursor: pointer;
+    /* 마우스 포인터 변경 */
+    transition: transform 0.3s ease;
+    /* 호버 시 애니메이션 */
+}
+
+/* 호버 시 아이콘 크기 확대 */
+.user-icon:hover,
+.calendar-icon:hover {
+    transform: scale(1.1);
+}

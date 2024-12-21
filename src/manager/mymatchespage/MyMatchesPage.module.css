@@ -1,0 +1,179 @@
+.container {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.arrowButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.arrowButton:hover {
+    color: #007bff;
+}
+
+.monthLabel {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.calendar {
+    width: 95%;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    /* 내용이 넘칠 경우 숨김 처리 */
+}
+
+.weekDays {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.dates {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.dates span {
+    width: calc(100% / 7 - 10px);
+    /* 각 날짜 칸의 너비를 일주일에 맞게 조정, 간격을 위해 -10px */
+    margin: 5px;
+    padding: 12px 0;
+    text-align: center;
+    box-sizing: border-box;
+    /* 패딩과 보더를 너비에 포함 */
+}
+
+.dates span:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.today,
+.selectedDate {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.noMatches {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+/* MatchResults 스타일링 개선 */
+.matchesContainer {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 2px solid #007bff;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+/* 개별 매치 카드 */
+.match {
+    margin-bottom: 15px;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fff, #f9f9f9);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 매치 카드 호버 효과 */
+.match:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+}
+
+/* 매치 텍스트 강조 */
+.match p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.match p:first-child {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* 매치 결과 강조 */
+.match .status {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* 매치가 없는 상태 표시 */
+.noMatches {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 15px 0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .match {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .matchesContainer {
+        padding: 10px;
+    }
+
+    .match p {
+        font-size: 14px;
+    }
+}
+
+/* 승리 팀 강조 텍스트 */
+.winner {
+    font-size: 18px;
+    font-weight: bold;
+    color: #28a745;
+    /* 초록색 (승리팀 강조) */
+    margin-top: 8px;
+}
+
+/* 비겼을 때 회색 텍스트 강조 */
+.winner:contains("무승부") {
+    color: #ffc107;
+    /* 노란색 */
+}
+
+.status {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+    /* 상태 강조 */
+}

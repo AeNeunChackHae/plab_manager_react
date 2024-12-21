@@ -1,0 +1,52 @@
+.container {
+    width: 1024px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.teamSetup {
+    display: flex;
+    justify-content: space-between;
+}
+
+.teamColumn {
+    display: flex;
+    flex-direction: column;
+    width: 32%;
+}
+
+.playerSlot {
+    margin-bottom: 10px;
+}
+
+.numberInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.completeButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.completeButton:hover {
+    background-color: #b71c1c;
+}
