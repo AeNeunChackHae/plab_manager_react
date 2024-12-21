@@ -1,0 +1,69 @@
+.dashboard-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #000;
+    color: #fff;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.header-icons i {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.dashboard-main {
+    padding: 1.5rem;
+}
+
+.user-info {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.user-email {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.match-stats {
+    margin-top: 1rem;
+    background-color: #e0e0e0;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.match-count {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.dashboard-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.dashboard-nav li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.dashboard-nav i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}

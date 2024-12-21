@@ -1,0 +1,22 @@
+/* MatchRegistrationPage.module.css */
+
+.container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.matchesList {
+    list-style: none;
+    padding: 0;
+}
+
+.matchesList li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.matchesList li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}

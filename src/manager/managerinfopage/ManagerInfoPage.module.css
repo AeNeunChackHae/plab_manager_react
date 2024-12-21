@@ -1,0 +1,87 @@
+/* 페이지 전체 스타일 */
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 1024px;
+    margin: 0 auto;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 정보 섹션 */
+.infoContainer {
+    width: 100%;
+    max-width: 600px;
+    /* 화면 중앙 배치 */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.infoSection {
+    margin-bottom: 30px;
+}
+
+.infoText {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* 버튼 스타일 */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* 네비게이션 버튼 스타일 */
+.navButtons {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.navButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.navButton:hover {
+    background-color: whitesmoke;
+}
+
+.icon {
+    height: 30px;
+    width: 30px;
+}

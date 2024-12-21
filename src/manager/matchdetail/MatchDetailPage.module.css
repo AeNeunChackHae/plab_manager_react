@@ -1,0 +1,26 @@
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.details {
+    margin-bottom: 20px;
+}
+
+.details p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.description {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.description h2 {
+    margin-top: 0;
+}

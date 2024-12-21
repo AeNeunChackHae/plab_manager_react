@@ -1,0 +1,32 @@
+{
+    "finished_matches": {
+        "1": [
+            {
+                "match": "Team A vs Team B",
+                "result": "3:2",
+                "status": "완료"
+            }
+        ],
+        "2": [
+            {
+                "match": "Team C vs Team D",
+                "result": "1:1",
+                "status": "무승부"
+            }
+        ],
+        "5": [
+            {
+                "match": "Team E vs Team F",
+                "result": "0:4",
+                "status": "완료"
+            }
+        ],
+        "10": [
+            {
+                "match": "Team G vs Team H",
+                "result": "2:3",
+                "status": "완료"
+            }
+        ]
+    }
+}

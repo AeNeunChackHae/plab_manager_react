@@ -1,0 +1,119 @@
+/* 전체 컨테이너 */
+.scheduleContainer {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* 필터 컨테이너 */
+.filterContainer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.filterContainer>button {
+    background-color: #F8FAFB;
+    width: 70px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+/* 날짜 섹션 */
+.daySection {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+/* 날짜 제목 스타일 */
+.dateTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* 매치 카드 컨테이너 */
+.schedules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+/* 매치 카드 */
+.scheduleCard {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: calc(25% - 15px);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scheduleCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 매치 카드 텍스트 */
+.scheduleCard h4 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.scheduleCard p {
+    margin: 3px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 요일 스타일 */
+.weekDays {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* 요일 강조 (일요일 빨간색, 토요일 파란색) */
+.weekDays span:nth-child(6) {
+    color: blue;
+    /* 토요일 */
+}
+
+.weekDays span:nth-child(7) {
+    color: red;
+    /* 일요일 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .scheduleCard {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .scheduleCard {
+        width: 100%;
+    }
+}

@@ -1,0 +1,61 @@
+/* 전체 컨테이너 설정 */
+.scheduleContainer {
+    display: flex;
+    /* 플렉스박스 사용 */
+    flex-wrap: wrap;
+    /* 다음 줄로 넘기기 허용 */
+    gap: 20px;
+    /* 요소 간 간격 */
+    padding: 20px;
+    margin: auto;
+    /* 중앙 정렬 */
+    max-width: 1200px;
+    /* 최대 너비 설정 */
+    justify-content: flex-start;
+    /* 왼쪽 정렬 */
+}
+
+/* 날짜 섹션 */
+.day {
+    display: flex;
+    /* 플렉스박스 사용 */
+    flex-direction: column;
+    /* 수직으로 카드 정렬 */
+    width: calc(33.33% - 20px);
+    /* 3열 레이아웃 (간격 포함) */
+    min-width: 250px;
+    /* 최소 너비 */
+    margin-bottom: 20px;
+}
+
+/* 스케줄 카드 */
+.scheduleCard {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 100%;
+    max-width: 300px;
+    /* 최대 너비 설정 */
+    height: auto;
+    /* 내용에 따라 높이 조정 */
+}
+
+/* 카드 헤더 */
+.card-header h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 카드 내용 */
+.card-content .time,
+.card-content .location,
+.card-content .teams {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 3px 0;
+}

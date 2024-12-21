@@ -1,0 +1,271 @@
+[
+    {
+        "date": "12월 2일",
+        "schedules": [
+            {
+                "time": "16:00",
+                "location": "서울운동장",
+                "teams": [
+                    "A팀",
+                    "B팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "17:30",
+                "location": "서울운동장",
+                "teams": [
+                    "E팀",
+                    "F팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "19:00",
+                "location": "서울운동장",
+                "teams": [
+                    "I팀",
+                    "J팀"
+                ],
+                "group": "혼성부"
+            },
+            {
+                "time": "20:30",
+                "location": "서울운동장",
+                "teams": [
+                    "C팀",
+                    "D팀"
+                ],
+                "group": "남성부"
+            }
+        ]
+    },
+    {
+        "date": "12월 3일",
+        "schedules": [
+            {
+                "time": "15:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "C팀",
+                    "D팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "16:30",
+                "location": "충청하나구장",
+                "teams": [
+                    "E팀",
+                    "G팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "18:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "H팀",
+                    "I팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "19:30",
+                "location": "충청하나구장",
+                "teams": [
+                    "J팀",
+                    "K팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "21:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "L팀",
+                    "M팀"
+                ],
+                "group": "혼성부"
+            }
+        ]
+    },
+    {
+        "date": "12월 4일",
+        "schedules": [
+            {
+                "time": "14:00",
+                "location": "양동풋살구장",
+                "teams": [
+                    "A팀",
+                    "C팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "15:30",
+                "location": "양동풋살구장",
+                "teams": [
+                    "B팀",
+                    "E팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "17:00",
+                "location": "양동풋살구장",
+                "teams": [
+                    "F팀",
+                    "G팀"
+                ],
+                "group": "혼성부"
+            },
+            {
+                "time": "18:30",
+                "location": "양동풋살구장",
+                "teams": [
+                    "H팀",
+                    "I팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "20:00",
+                "location": "양동풋살구장",
+                "teams": [
+                    "J팀",
+                    "L팀"
+                ],
+                "group": "여성부"
+            }
+        ]
+    },
+    {
+        "date": "12월 5일",
+        "schedules": [
+            {
+                "time": "15:00",
+                "location": "서울운동장",
+                "teams": [
+                    "K팀",
+                    "M팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "16:30",
+                "location": "서울운동장",
+                "teams": [
+                    "A팀",
+                    "J팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "18:00",
+                "location": "서울운동장",
+                "teams": [
+                    "E팀",
+                    "L팀"
+                ],
+                "group": "혼성부"
+            }
+        ]
+    },
+    {
+        "date": "12월 6일",
+        "schedules": [
+            {
+                "time": "14:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "F팀",
+                    "G팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "15:30",
+                "location": "충청하나구장",
+                "teams": [
+                    "H팀",
+                    "I팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "17:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "B팀",
+                    "C팀"
+                ],
+                "group": "혼성부"
+            }
+        ]
+    },
+    {
+        "date": "12월 7일",
+        "schedules": [
+            {
+                "time": "15:00",
+                "location": "양동풋살구장",
+                "teams": [
+                    "D팀",
+                    "M팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "16:30",
+                "location": "양동풋살구장",
+                "teams": [
+                    "E팀",
+                    "F팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "18:00",
+                "location": "양동풋살구장",
+                "teams": [
+                    "G팀",
+                    "H팀"
+                ],
+                "group": "혼성부"
+            }
+        ]
+    },
+    {
+        "date": "12월 8일",
+        "schedules": [
+            {
+                "time": "14:00",
+                "location": "서울운동장",
+                "teams": [
+                    "I팀",
+                    "J팀"
+                ],
+                "group": "남성부"
+            },
+            {
+                "time": "15:30",
+                "location": "서울운동장",
+                "teams": [
+                    "K팀",
+                    "L팀"
+                ],
+                "group": "여성부"
+            },
+            {
+                "time": "17:00",
+                "location": "서울운동장",
+                "teams": [
+                    "A팀",
+                    "B팀"
+                ],
+                "group": "혼성부"
+            }
+        ]
+    }
+]

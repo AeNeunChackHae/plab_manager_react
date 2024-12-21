@@ -1,0 +1,57 @@
+.container {
+    width: 1024px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+}
+
+.content {
+    padding: 20px;
+    background-color: #e8eef2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menuItem {
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.menuItem:hover {
+    background-color: #f1f1f1;
+}
+
+.divider {
+    height: 2px;
+    background-color: #ccc;
+    margin: 10px 0;
+}
+
+.appInfo {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.withdrawButton {
+    padding: 10px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+    width: 90px;
+    margin-left: auto;
+}
+
+.withdrawButton:hover {
+    text-decoration: underline;
+}
