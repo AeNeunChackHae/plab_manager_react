@@ -1,3 +1,5 @@
+/* 공통 스타일 */
+
 .appContainer {
   display: flex;
   flex-direction: column;
@@ -10,99 +12,38 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown select {
-  width: 150px;
-  height: 40px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  padding: 5px;
-}
-
-.vestsContainer {
+.pageContainer {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.vest {
-  width: 50px;
-  height: auto;
-}
-
-.gridContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-}
-
-.gridItem {
-  display: flex;
+  gap: 20px; 
+  padding: 20px;
+  margin: 0 auto;
   flex-direction: column;
   align-items: center;
+  max-width: 1024px;
+  
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.playerName {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.numberInput {
-  width: 50px;
-  height: 30px;
-  font-size: 14px;
-  text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.actionButtons {
-  grid-column: span 3;
+.dropdownContainer {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  align-items: center;
+  justify-content: flex-start; /* 왼쪽으로 정렬 */
+  gap: 10px; /* 드롭다운과 버튼 간격 */
+  width: 100%; /* 부모 컨테이너의 전체 너비 사용 */
 }
 
-.completeButton {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.absentButton {
-  padding: 10px 20px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.submitButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.submitButton:hover {
-  background-color: #0056b3;
-}
-
-.selectedPlayer {
-  margin-bottom: 10px;
-  font-size: 16px;
+.dropdown-toggle {
+  width: 200px;
+  text-align: center;
   font-weight: bold;
-  color: #333;
+}
+
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .teamsContainer {
@@ -111,16 +52,17 @@
   margin-bottom: 20px;
 }
 
-.teamVest {
-  width: 80px;
-  height: auto;
-  margin-bottom: 10px; /* 조끼와 슬롯 사이 간격 */
-}
-
 .teamContainer {
   display: flex;
   flex-direction: column; /* 슬롯을 세로로 정렬 */
   align-items: center;
+  text-align: center;
+}
+
+.teamVest {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px; /* 조끼와 슬롯 사이 간격 */
 }
 
 .slots {
@@ -141,6 +83,52 @@
 
 .slot:hover {
   background-color: #e0e0e0;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.absentButton {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.absentButton:hover {
+  background-color: darkred;
+}
+
+.pomButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.redCardButton {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.yellowCardButton {
+  background-color: yellow;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .modalOverlay {
@@ -164,14 +152,41 @@
   width: 300px;
 }
 
-.pomButton {
-  background-color: #4caf50;
+.selectedPOM {
+  background-color: green;
+  color: white;
 }
 
-.redCardButton {
-  background-color: red;
+.confirmButton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.yellowCardButton {
-  background-color: yellow;
+.confirmButton:hover {
+  background-color: #0056b3;
+}
+
+.slotButton {
+  width: 80px;
+  height: 40px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.slotButton:hover {
+  background-color: #e0e0e0;
+}
+
+.cardIcon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+  display: inline-block;
 }
