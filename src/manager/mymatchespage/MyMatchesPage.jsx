@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; 
 import styles from "./MyMatchesPage.module.css";
 
 const MyMatchesPage = () => {
-    const [selectedDate, setSelectedDate] = useState(1);
-    const [matchData, setMatchData] = useState({});
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [matchData, setMatchData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMatchData = async () => {
@@ -22,14 +24,23 @@ const MyMatchesPage = () => {
     }, []);
 
     const handleDateClick = (date) => {
-        setSelectedDate(date);
+        setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date));
     };
+
+    const handleVideoUpload = () => {
+        navigate('/video-upload');  // navigate 함수를 사용하여 리디렉션
+    };
+
+    const filteredMatches = matchData.filter(match => {
+        const matchDate = new Date(match.date);
+        return matchDate.toDateString() === selectedDate.toDateString();
+    });
 
     return (
         <div className={styles.container}>
             <div className={styles.calendarHeader}>
                 <button className={styles.arrowButton}>{"<"}</button>
-                <span className={styles.monthLabel}>2024년 12월</span>
+                <span className={styles.monthLabel}>{`${selectedDate.getFullYear()}년 ${selectedDate.getMonth() + 1}월`}</span>
                 <button className={styles.arrowButton}>{">"}</button>
             </div>
 
@@ -41,12 +52,10 @@ const MyMatchesPage = () => {
                 </div>
 
                 <div className={styles.dates}>
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map((date) => (
+                    {Array.from({ length: new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate() }, (_, i) => i + 1).map((date) => (
                         <span
                             key={date}
-                            className={
-                                date === selectedDate ? styles.selectedDate : ""
-                            }
+                            className={date === selectedDate.getDate() ? styles.selectedDate : ""}
                             onClick={() => handleDateClick(date)}
                         >
                             {date}
@@ -59,34 +68,25 @@ const MyMatchesPage = () => {
                 <div>Loading...</div>
             ) : (
                 <div className={styles.matchesContainer}>
-                    {matchData[selectedDate] && matchData[selectedDate].length > 0 ? (
-                        matchData[selectedDate].map((match, index) => {
-                            const [teamA, teamB] = match.match.split(" vs ");
-                            const [scoreA, scoreB] = match.result.split(":").map(Number);
-
-                            // 승리 팀 계산 로직
-                            const winner =
-                                scoreA > scoreB
-                                    ? teamA
-                                    : scoreA < scoreB
-                                        ? teamB
-                                        : "무승부";
-
-                            return (
-                                <div key={index} className={styles.match}>
-                                    <p>경기: {match.match}</p>
-                                    <p>결과: {match.result}</p>
-                                    <p className={styles.status}>
-                                        상태: {match.status}
-                                    </p>
-                                    <p className={styles.winner}>
-                                        {winner === "무승부" ? "결과: 무승부" : `승리 팀: ${winner}`}
-                                    </p>
-                                </div>
-                            );
-                        })
+                    {filteredMatches.length > 0 ? (
+                        filteredMatches.map((match, index) => (
+                            <div key={index} className={styles.match}>
+                                <p>{match.type} | {match.date} {match.location} | {match.status}</p>
+                                <p>Teams: {match.details.teamA} vs {match.details.teamB}</p>
+                                <p>Time: {match.details.time}</p>
+                                {match.status === "경기 완료" ? (
+                                    <>
+                                        <p>Score: {match.details.finalScore}</p>
+                                        <p>Video: <a href={match.details.videoLink} target="_blank" rel="noopener noreferrer">Watch Here</a></p>
+                                        <button onClick={handleVideoUpload}>영상 업로드</button>
+                                    </>
+                                ) : (
+                                    <button>매치 관리</button>
+                                )}
+                            </div>
+                        ))
                     ) : (
-                        <div className={styles.noMatches}>진행한 매치가 없어요.</div>
+                        <div className={styles.noMatches}>선택한 날짜에 매치 정보가 없습니다.</div>
                     )}
                 </div>
             )}

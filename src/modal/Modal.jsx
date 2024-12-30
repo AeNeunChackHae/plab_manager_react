@@ -7,7 +7,7 @@ const Modal = ({ isOpen, title, children, closeModal }) => {
     const handleClose = () => closeModal(); // 인자를 제거하여 간소화
 
     return (
-        <div className={styles.modalOverlay} onClick={handleClose}>
+        <div className={styles.overlay} onClick={handleClose}>
             <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
                     <h2>{title}</h2>

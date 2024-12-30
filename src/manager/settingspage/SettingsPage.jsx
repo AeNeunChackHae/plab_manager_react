@@ -15,14 +15,6 @@ const SettingsPage = () => {
                     로그아웃
                 </div>
                 <div className={styles.divider}></div>
-                <div className={styles.menuItem} onClick={() => navigate('/privacy-policy')}>
-                    개인정보처리방침
-                </div>
-                <div className={styles.divider}></div>
-                <div className={styles.appInfo}>
-                    <p>앱 버전 1.39.0</p>
-                    <p>최신 버전 1.39.2</p>
-                </div>
                 <button className={styles.withdrawButton} onClick={() => navigate('/withdrawal')}>
                     탈퇴하기 &gt;
                 </button>

@@ -13,10 +13,18 @@ const Header = () => {
         navigate('/my-matches');  // 'calendar'는 캘린더 페이지의 경로로, 실제 경로에 맞게 수정해야 합니다.
     };
 
+    const goToScheduleList = () => {
+        navigate('/schedule-list');
+    }
+    
     return (
         <header className="header">
             <div className="logo">
-                <img src="/assets/image/plab_manager_logo_white.png" alt="Logo" />
+                <img 
+                    src="/assets/image/plab_manager_logo_white.png" 
+                    alt="Logo" 
+                    onClick={goToScheduleList}
+                />
             </div>
             <div className="icons">
                 <img

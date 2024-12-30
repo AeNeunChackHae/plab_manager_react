@@ -1,0 +1,110 @@
+[
+    {
+        "date": "12월 2일",
+        "schedules": [
+            {
+                "id": "1",
+                "time": "16:00",
+                "location": "서울운동장",
+                "teams": [
+                    "A팀",
+                    "B팀"
+                ],
+                "group": "남성부",
+                "match-type": "소셜매치"
+            },
+            {
+                "id": "2",
+                "time": "17:30",
+                "location": "서울운동장",
+                "teams": [
+                    "E팀",
+                    "F팀"
+                ],
+                "group": "여성부",
+                "match-type": "팀매치"
+            },
+            {
+                "id": "3",
+                "time": "19:00",
+                "location": "서울운동장",
+                "teams": [
+                    "I팀",
+                    "J팀"
+                ],
+                "group": "혼성부",
+                "match-type": "팀매치"
+            },
+            {
+                "id": "4",
+                "time": "20:30",
+                "location": "서울운동장",
+                "teams": [
+                    "C팀",
+                    "D팀"
+                ],
+                "group": "남성부",
+                "match-type": "팀매치"
+            }
+        ]
+    },
+    {
+        "date": "12월 3일",
+        "schedules": [
+            {
+                "id": "5",
+                "time": "15:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "C팀",
+                    "D팀"
+                ],
+                "group": "남성부",
+                "match-type": "팀매치"
+            },
+            {
+                "id": "6",
+                "time": "16:30",
+                "location": "충청하나구장",
+                "teams": [
+                    "E팀",
+                    "G팀"
+                ],
+                "group": "여성부",
+                "match-type": "팀매치"
+            },
+            {
+                "id": "7",
+                "time": "18:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "H팀",
+                    "I팀"
+                ],
+                "group": "여성부",
+                "match-type": "소셜매치"
+            },
+            {
+                "id": "8",
+                "time": "19:30",
+                "location": "충청하나구장",
+                "teams": [
+                    "J팀",
+                    "K팀"
+                ],
+                "group": "남성부",
+                "match-type": "소셜매치"
+            },
+            {
+                "time": "21:00",
+                "location": "충청하나구장",
+                "teams": [
+                    "L팀",
+                    "M팀"
+                ],
+                "group": "혼성부",
+                "match-type": "팀매치"
+            }
+        ]
+    }
+]

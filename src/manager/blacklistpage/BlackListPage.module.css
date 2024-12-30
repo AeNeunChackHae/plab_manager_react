@@ -1,0 +1,64 @@
+/* 전체 레이아웃 스타일링 */
+.userList {
+    padding: 20px;
+    max-width: 1024px; /* 너비 설정 */
+    margin: 0 auto; /* 중앙 정렬 */
+  }
+  
+  /* 각 사용자 항목 스타일링 */
+  .user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  /* 프로필 이미지 스타일 */
+  .profileImage {
+    width: 50px; /* 이미지 크기 설정 */
+    height: 50px;
+    border-radius: 50%; /* 원형 이미지 */
+    margin-right: 10px; /* 이름과의 간격 설정 */
+  }
+  
+  /* 사용자 이름 스타일 */
+  .userName {
+    font-size: 16px;
+    color: #333;
+    flex-grow: 1; /* 이름 영역을 유연하게 확장 */
+  }
+  
+  /* 버튼 기본 스타일 */
+  .unblockButton {
+    width: 100px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    background-color: #1100ff; /* 기본적인 버튼 색상 */
+    transition: background-color 0.3s;
+  }
+  
+  /* 비활성화된 버튼 스타일 */
+  .unblockButton[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* 버튼 호버 효과 */
+  .unblockButton:hover:not([disabled]) {
+    background-color: #2f00ff;
+  }
+  
+ /* 제목 스타일 */
+.title {
+
+    font-size: 24px; /* 글씨 크기 */
+    font-weight: bold; /* 글씨 두께 */
+}
