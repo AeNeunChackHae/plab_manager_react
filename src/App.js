@@ -7,16 +7,16 @@ import SignupPage from './manager/signuppage/SignupPage.jsx';
 import ManagerInfoPage from './manager/managerinfopage/ManagerInfoPage.jsx';
 import MyMatchesPage from './manager/mymatchespage/MyMatchesPage.jsx';
 import SettingsPage from './manager/settingspage/SettingsPage.jsx';
-import ChangePasswordPage from './manager/changepasswordpage/ChangePasswordPage.jsx';
-import WithdrawalPage from './manager/withdrawalpage/WithdrawalPage.jsx';
 import MyReviews from './manager/reviewspage/MyReviews.jsx';
 import TeamManagementPage from './manager/teammanagementpage/TeamManagementPage.jsx';
 import ScheduleList from './manager/schedulelistpage/ScheduleList.jsx';
 import MatchDetailPage from './manager/matchdetail/MatchDetailPage.jsx';
 import PlayerNumberAssignment from './manager/playernumberassignment/PlayerNumberAssignment.jsx';
-import MatchResultPage from './manager/matchresultpage/MatchResultPage.jsx';
-import MatchRegistrationPage from './manager/matchregistrationpage/MatchRegistrationPage.jsx';
-import PrivacyPolicyPage from './manager/privacypolicypage/PrivacyPolicyPage.jsx';
+import BlacklistManager from './manager/blacklistpage/BlackListPage.jsx';
+import ScoreBoardPage from './manager/scoreboard/ScoreBoardPage.jsx';
+import VideoUploadPage from './manager/videoupload/VideoUploadPage.jsx';
+import MatchCautionsPage from './manager/matchcautions/MatchCautionsPage.jsx';
+import MatchFeedbackPage from './manager/matchfeedback/MatchFeedbackPage.jsx';
 
 const App = () => {
   return (
@@ -31,14 +31,15 @@ const App = () => {
           <Route path="/my-matches" element={<MyMatchesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/reviews" element={<MyReviews />} />
-          <Route path="/change-password" element={<ChangePasswordPage />} />
-          <Route path="/withdrawal" element={<WithdrawalPage />} />
           <Route path="/team-management" element={<TeamManagementPage />} />
           <Route path="/match-detail/:matchId" element={<MatchDetailPage />} />
           <Route path="/player-numbers" element={<PlayerNumberAssignment />} />
-          <Route path="/match-results" element={<MatchResultPage />} />
-          <Route path="/match-registration" element={<MatchRegistrationPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/blacklist" element={<BlacklistManager />} /> 
+          <Route path="/score-board" element={<ScoreBoardPage />} /> 
+          <Route path="/video-upload" element={<VideoUploadPage />} /> 
+          <Route path="/match-cautions" element={<MatchCautionsPage />} /> 
+          
+          <Route path="/feedback" element={<MatchFeedbackPage />} />
         </Route>
 
         <Route path="/" element={<LoginPage />} />

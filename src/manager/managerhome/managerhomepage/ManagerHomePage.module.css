@@ -1,0 +1,30 @@
+.managerHomePage {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  .applyButtonContainer {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .applyButton {
+    padding: 10px 20px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  
+  .applyButton:hover {
+    background-color: #333;
+  }
+  

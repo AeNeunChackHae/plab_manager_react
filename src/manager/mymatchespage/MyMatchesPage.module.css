@@ -177,3 +177,14 @@
     color: #007bff;
     /* 상태 강조 */
 }
+
+.highlightTime {
+    background-color: yellow; /* 시간 조건을 만족하는 게임 */
+}
+.highlightScore {
+    background-color: green; /* 골 수 조건을 만족하는 게임 */
+}
+.highlightAttendance {
+    background-color: blue; /* 관중 수 조건을 만족하는 게임 */
+}
+  

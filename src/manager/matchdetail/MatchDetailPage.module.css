@@ -1,26 +1,49 @@
 .container {
-    width: 80%;
-    margin: 20px auto;
-    background-color: #f8f9fa;
+    max-width: 1024px;
+    margin: 0 auto;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.details {
-    margin-bottom: 20px;
-}
-
-.details p {
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.description {
-    background-color: #fff;
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa; /* Light grey background */
+    border: 1px solid #dee2e6; /* Light border for contrast */
+  }
+  
+  .header, .match-cost, .match-details, .match-info {
+    width: 100%; /* Ensures full width within the container */
+    background-color: #fff; /* White background for content areas */
+    padding: 20px;
+    margin-bottom: 10px; /* Reduces space between sections */
+    box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Adds subtle shadow for depth */
+    border-radius: 5px; /* Rounds the corners */
+  }
+  
+  .header p, .match-cost p, .match-details p, .match-info p {
+    font-size: 16px; /* Adjusts font size for readability */
+    line-height: 1.5; /* Increases line height for better text flow */
+    color: #495057; /* Dark grey color for text for better readability */
+  }
+  
+  .header p {
+    font-weight: bold; /* Makes the header texts bold */
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Aligns buttons to each side */
+    padding: 20px;
+  }
+  
+  button {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
     border-radius: 5px;
-}
-
-.description h2 {
-    margin-top: 0;
-}
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darken button on hover */
+  }
+  

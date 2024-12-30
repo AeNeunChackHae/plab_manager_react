@@ -1,0 +1,121 @@
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 1024px;
+    font-family: 'Arial', sans-serif;
+}
+
+
+.tabBar {
+    width: 200px;
+    background-color: #000;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 100%;
+}
+
+
+.matchList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.matchItem {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr auto;
+    align-items: center;
+    width: 800px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+
+.team {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.teamReverse{
+    display:flex;
+    align-items: center;
+    gap:10px;
+    justify-content: right;
+}
+
+.teamLogo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.teamName {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.score {
+    background-color: #F2F5F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 60px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.rightBlock {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 140px;
+}
+
+
+.videoButton, .downloadButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007BFF;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.videoButton img, .downloadButton img {
+    width: 20px;
+    height: 20px;
+}
+
+.uploadButton {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.uploadButton:hover {
+    background-color: #45a049;
+}
