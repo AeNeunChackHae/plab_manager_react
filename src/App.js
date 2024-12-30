@@ -23,7 +23,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
         <Route element={<MainLayout />}>
@@ -43,7 +43,6 @@ const App = () => {
           <Route path="/feedback" element={<MatchFeedbackPage />} />
         </Route>
 
-        <Route path="/" element={<LoginPage />} />
       </Routes>
     </Router>
   );
