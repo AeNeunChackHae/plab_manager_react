@@ -6,7 +6,6 @@
     background-color: #f9f9f9;
 }
 
-필터 컨테이너
 .filterContainer {
     display: flex;
     justify-content: flex-start;
@@ -15,12 +14,14 @@
     padding: 10px;
 }
 
-.filterContainer>button {
+.filterButton {
     background-color: #F8FAFB;
-    width: 70px;
+    width: 100px;
     color: black;
     border: 1px solid black;
     border-radius: 30px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 /* 날짜 섹션 */
@@ -29,16 +30,16 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 20px;
 }
 
 /* 날짜 제목 스타일 */
 .dateTitle {
-    font-size: 1.2rem;
+    font-size: 23px;
     font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
+    padding: 0;
+    margin-top: 3px;
+    margin-bottom: 15px;
 }
 
 /* 매치 카드 컨테이너 */
@@ -56,8 +57,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    width: calc(25% - 15px);
-    text-align: left;
+    width: calc(30% - 15px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -70,53 +70,32 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+
 /* 매치 카드 텍스트 */
-.scheduleCard h4 {
-    margin-bottom: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.scheduleCard p {
+.matchLocation {
     margin: 3px 0;
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+    text-align: left;
 }
 
-/* 요일 스타일 */
-.weekDays {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 10px;
-    color: #555;
+.matchDetails {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 200;
+    color: black;
+    text-align: left;
 }
 
-/* 요일 강조 (일요일 빨간색, 토요일 파란색) */
-.weekDays span:nth-child(6) {
-    color: blue;
-    /* 토요일 */
+.matchTime p {
+    margin: 2px 0;
+    font-size: 17px;
+    text-align: left;
 }
-
-.weekDays span:nth-child(7) {
-    color: red;
-    /* 일요일 */
-}
-
-
   
-  .closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  .modal {
+/* 지역 선택 모달 */
+.modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -127,10 +106,10 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     width: 300px;
-    text-align: center;
-  }
-  
-  .overlay {
+    align-items: flex-start;
+}
+
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -138,21 +117,31 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
+}
+
+.regionList {
+    width: 100%;
+    max-width: 300px;
+    height: 60px;
+    font-size: 20px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
   }
-  
-  .closeButton {
-    height: 40px;
-    width: 60px;
-    margin-top: 10px;
-    padding: 10px;
-    background-color: black;
-    color: #fff;
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    background: none;
     border: none;
-    border-radius: 5px;
+    font-size: 20px;
     cursor: pointer;
-    font-size: smaller;
-  }
-  
-  .closeButton:hover {
-    background-color: #0056b3;
-  }
+}
+
+.noSchedule {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}

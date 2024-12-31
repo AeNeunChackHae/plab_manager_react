@@ -33,7 +33,7 @@ const SignupPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/auth/signup', {
+      const response = await fetch('http://localhost:9090/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
