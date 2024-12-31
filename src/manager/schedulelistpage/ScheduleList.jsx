@@ -58,7 +58,7 @@ const ScheduleList = () => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await fetch('http://localhost:9090/manager/schedule-list', {
+        const response = await fetch('http://localhost:9090/schedule-list', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

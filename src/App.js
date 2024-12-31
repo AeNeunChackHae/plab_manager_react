@@ -27,13 +27,15 @@ const App = () => {
         <Route path="/signup" element={<SignupPage />} />
 
         <Route element={<MainLayout />}>
+          {/* 완료 */}
           <Route path="/schedule-list" element={<ScheduleList />} />
+          <Route path="/match-detail/:matchId" element={<MatchDetailPage />} />
+          {/* 미완료 */}
           <Route path="/manager-info" element={<ManagerInfoPage />} />
           <Route path="/my-matches" element={<MyMatchesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/reviews" element={<MyReviews />} />
           <Route path="/team-management" element={<TeamManagementPage />} />
-          <Route path="/match-detail/:matchId" element={<MatchDetailPage />} />
           <Route path="/player-numbers" element={<PlayerNumberAssignment />} />
           <Route path="/blacklist" element={<BlacklistManager />} /> 
           <Route path="/score-board" element={<ScoreBoardPage />} /> 
