@@ -41,7 +41,7 @@ const MyMatchesPage = () => {
             }
 
             try {
-                const response = await fetch("http://localhost:9090/manager/my-matches", {
+                const response = await fetch("http://localhost:9090/my-match/my", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -64,13 +64,15 @@ const MyMatchesPage = () => {
                     }
                     groupedByDate[eventDate].push({
                         id: event.match_id,
-                        type: event.match_type === 1 ? "팀매치" : "소셜매치",
+                        statusCode: event.status_code, // 추가된 상태 코드
                         startTime: getTime24HourFormat(event.start_time),
                         endTime: getTime24HourFormat(event.end_time),
+                        matchStartTime: new Date(event.start_time), // 시작 시간
                         location: event.stadium_name,
                         region: REGION_MAP[event.region],
                         gender: event.gender === 0 ? "남자" : "여자",
                         level: LEVEL_MAP[event.level],
+                        type: event.match_type === 1 ? "팀매치" : "소셜매치",
                     });
                 });
 
@@ -95,16 +97,33 @@ const MyMatchesPage = () => {
         setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date));
     };
 
+    const handleMatchClick = (match) => {
+        const { statusCode, matchStartTime, id } = match;
+        const now = new Date();
+
+        if (statusCode === 0) {
+            alert("마감된 매치가 아닙니다!");
+            return;
+        }
+
+        const tenMinutesBeforeStart = new Date(matchStartTime);
+        tenMinutesBeforeStart.setMinutes(matchStartTime.getMinutes() - 10);
+
+        if (now < tenMinutesBeforeStart) {
+            alert("아직 시작 전입니다!");
+            return;
+        }
+
+        // 조건 충족 시 페이지 이동
+        navigate("/player-numbers", { state: { matchId: id } });
+    };
+
     const handleMonthChange = (direction) => {
         setSelectedDate((prev) => {
             const newDate = new Date(prev);
             newDate.setMonth(newDate.getMonth() + direction);
             return newDate;
         });
-    };
-
-    const handleMatchClick = (matchId) => {
-        navigate("/player-numbers", { state: { matchId } }); // match_id를 state로 전달
     };
 
     const generateCalendar = () => {
@@ -212,7 +231,7 @@ const MyMatchesPage = () => {
                             <div
                                 key={index}
                                 className={styles.match}
-                                onClick={() => handleMatchClick(match.id)} // match_id 전달
+                                onClick={() => handleMatchClick(match)}
                             >
                                 <p>{`${match.type} | ${match.startTime} - ${match.endTime}`}</p>
                                 <p>{`${match.location} | ${match.region} | ${match.level}`}</p>
