@@ -26,7 +26,7 @@ const getTime24HourFormat = (dateString) => {
   return date.toLocaleTimeString('ko-KR', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false, // 24시간 형식 사용
+    hour12: false,
   });
 };
 
@@ -51,8 +51,20 @@ const ScheduleList = () => {
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(''); // 에러 상태
   const [isCityModalOpen, setIsCityModalOpen] = useState(false); // 지역 선택 모달 상태
-  const [city, setCity] = useState('서울'); // 선택된 지역 기본값: 서울울
+  const [city, setCity] = useState('서울'); // 선택된 지역 기본값: 서울
   const navigate = useNavigate();
+
+  // 유저 인증 확인
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+
+    if (!userId || !token) {
+      alert('정보가 유효하지 않습니다. 다시 로그인해주세요!');
+      navigate('/'); // 로그인 페이지로 이동
+      return;
+    }
+  }, [navigate]);
 
   // 백엔드에서 일정 데이터 가져오기
   useEffect(() => {
@@ -76,7 +88,7 @@ const ScheduleList = () => {
         // 날짜별로 그룹화 (로컬 시간대 기준)
         const groupedByDate = {};
         result.data.forEach(event => {
-          const eventDate = getLocalDateString(event.start_time); // 로컬 날짜 사용
+          const eventDate = getLocalDateString(event.start_time);
           if (!groupedByDate[eventDate]) {
             groupedByDate[eventDate] = [];
           }
@@ -86,7 +98,7 @@ const ScheduleList = () => {
             startTime: getTime24HourFormat(event.start_time),
             endTime: getTime24HourFormat(event.end_time),
             location: event.stadium_name,
-            region: REGION_MAP[event.region], // 지역 코드 매핑
+            region: REGION_MAP[event.region],
             gender: event.gender === 0 ? '남자' : '여자',
             level: LEVEL_MAP[event.level],
             address: event.address
