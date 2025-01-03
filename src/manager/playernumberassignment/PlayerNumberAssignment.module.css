@@ -23,7 +23,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* 왼쪽 정렬 */
+  align-items: flex-start;
 }
 
 .dropdownWrapper {
@@ -42,7 +42,7 @@
 
 .dropdownMenu {
   position: absolute;
-  top: calc(100% + 5px); /* 버튼 바로 아래에 5px 간격 */
+  top: calc(100% + 5px);
   left: 0;
   background: white;
   border: 1px solid #ccc;
@@ -70,8 +70,8 @@
 .dropdownItem.absent {
   background-color: red;
   color: white;
-  pointer-events: none; /* 불참 인원 클릭 방지 */
-  opacity: 0.6; /* 불참 구분 */
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 /* 오른쪽 영역: 조끼와 슬롯 */
@@ -86,7 +86,6 @@
   justify-content: space-around;
   width: 100%;
 }
-
 
 .teamContainer {
   display: flex;
@@ -121,13 +120,19 @@
   background-color: #e0e0e0;
 }
 
+.slot.selected {
+  background-color: #ffecd2;
+  border-color: #ff9800;
+}
+
 /* 하단 버튼들 */
 .actionButtons {
   display: flex;
-  justify-content: right;
-  gap: 60px;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
   margin-top: 20px;
+  border-radius: 20px;
 }
 
 .absentButton {
@@ -136,7 +141,7 @@
   padding: 10px 20px;
   border: none;
   width: 120px;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
@@ -150,7 +155,7 @@
   padding: 10px 20px;
   border: none;
   width: 120px;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
@@ -158,45 +163,82 @@
   background-color: #388e3c;
 }
 
-.fourButton{
+.fourButton {
   max-width: 100%;
   display: flex;
-  margin: 0;
-  padding: 0;
-  gap: 45px;
+  gap: 20px;
 }
 
-.twoButton{
+.twoButton {
   display: flex;
   max-width: 100%;
-  margin-right:60px;
-  padding: 0;
-  gap: 70px;
-
+  gap: 20px;
+}
+.endGameButton{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  color: black;
 }
 
+.pomButton,
+.yellowCardButton,
+.redCardButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.pomButton {
+  background-color: rgb(56, 180, 56);
+}
+
+.pomButton:hover {
+  background-color: #008000;
+}
+
+.yellowCardButton {
+  background-color: rgb(255, 203, 33);
+}
+
+.yellowCardButton:hover {
+  background-color: rgb(255, 196, 0);
+}
+
+.redCardButton {
+  background-color: #ff4747;
+}
+
+.redCardButton:hover {
+  background-color: red;
+}
+
+/* 모달 */
 .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* 반투명 배경 */
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* 다른 요소 위로 올리기 */
+  z-index: 1000;
 }
 
 .modalContent {
   background-color: white;
   padding: 20px 30px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 400px;
   text-align: center;
-  position: relative;
   z-index: 1001;
 }
 
@@ -205,14 +247,18 @@
   font-size: 24px;
 }
 
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+}
+
 .playerGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3개의 열로 설정 */
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   margin-bottom: 20px;
 }
 
-/* 공통 스타일 */
 .playerButton {
   padding: 10px;
   background-color: lightgray;
@@ -227,7 +273,7 @@
   background-color: #c5c5c5;
 }
 
-.selected {
+.playerButton.selected {
   background-color: #979797;
   border-color: #ff9800;
   color: #ff9800;
@@ -257,96 +303,4 @@
 
 .closeButton:hover {
   background-color: #e53935;
-}
-
-.modalActions {
-  display: flex;
-  justify-content: space-between;
-}
-
-.playerGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  margin-bottom: 20px;
-}
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* 반투명 배경 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* 다른 요소 위로 올리기 */
-}
-
-.modalContent {
-  background-color: white;
-  padding: 20px 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
-  z-index: 1001;
-}
-
-.modalContent h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-.modalContent button {
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-
-.actionButtons {
-  display: flex;
-  justify-content: right;
-  gap: 60px;
-  width: 100%;
-  margin-top: 20px;
-}
-.pomButton{
-  background-color: rgb(56, 180, 56);
-}
-
-.yellowCardButton{
-  background-color: rgb(255, 203, 33);
-}
-
-.redCardButton {
-  background-color: #ff4747;
-}
-
-.pomButton, .yellowCardButton, .redCardButton {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  color: white;
-}
-
-.redCardButton:hover{
-  background-color: red;
-  color: white;
-}
-.yellowCardButton:hover{
-  background-color: rgb(255, 196, 0);
-  color: white;
-}
-
-.pomButton:hover{
-  background-color: #008000;
-  color: white;
 }
