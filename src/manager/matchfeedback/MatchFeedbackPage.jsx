@@ -57,16 +57,16 @@ const FeedbackPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>12월 29일 금요일 20:00</h1>
-      <p>서울 명동 SKY 풋살파크 A구장</p>
+      <h1 className={styles.h1}>12월 29일 금요일 20:00</h1>
+      <p className={styles.p}>서울 명동 SKY 풋살파크 A구장</p>
 
       <div className={styles.feedbackSection}>
         {/* 매니저 평가 */}
         <div className={styles.feedbackItem}>
           <p>강민기 매니저는 어땠나요?</p>
           <div className={styles.buttons}>
-            <button onClick={() => openModal('mannerBad')}>아쉬워요</button>
-            <button onClick={() => openModal('mannerGood')}>좋았어요</button>
+            <button className={styles.button} onClick={() => openModal('mannerBad')}>아쉬워요</button>
+            <button className={styles.button} onClick={() => openModal('mannerGood')}>좋았어요</button>
           </div>
         </div>
 
@@ -79,8 +79,8 @@ const FeedbackPage = () => {
             개인 경기 관리에 도움을 드리니, 적극적인 평가 부탁해요.
           </small>
           <div className={styles.buttons}>
-            <button onClick={() => openModal('playerBad')}>비매너가 있어요</button>
-            <button onClick={() => openModal('playerEvaluation')}>평가해주세요</button>
+            <button className={styles.button} onClick={() => openModal('playerBad')}>비매너가 있어요</button>
+            <button className={styles.button} onClick={() => openModal('playerEvaluation')}>평가해주세요</button>
           </div>
         </div>
 
@@ -88,8 +88,8 @@ const FeedbackPage = () => {
         <div className={styles.feedbackItem}>
           <p>이용 구장은 어땠나요?</p>
           <div className={styles.buttons}>
-            <button onClick={() => openModal('facilityBad')}>아쉬워요</button>
-            <button onClick={() => openModal('facilityGood')}>좋았어요</button>
+            <button className={styles.button} onClick={() => openModal('facilityBad')}>아쉬워요</button>
+            <button className={styles.button} onClick={() => openModal('facilityGood')}>좋았어요</button>
           </div>
         </div>
       </div>
@@ -166,7 +166,7 @@ const FeedbackPage = () => {
               팀워크가 좋아요!
             </label>
           </div>
-          <button onClick={handleNextStep}>
+          <button className={styles.button} onClick={handleNextStep}>
             {currentStep < selectedPlayers.length - 1 ? '다음 선수 선택하기' : '평가 완료하기'}
           </button>
         </div>
@@ -176,7 +176,7 @@ const FeedbackPage = () => {
         <div className={styles.modal}>
           <h2>평가 완료!</h2>
           <p>선수 칭찬 평가가 성공적으로 제출되었습니다.</p>
-          <button onClick={closeModal}>닫기</button>
+          <button className={styles.button} onClick={closeModal}>닫기</button>
         </div>
       )}
     </div>

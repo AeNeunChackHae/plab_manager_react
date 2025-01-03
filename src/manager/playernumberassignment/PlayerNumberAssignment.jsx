@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../playernumberassignment/PlayerNumberAssignment.module.css';
 
 const players = [
@@ -27,7 +27,9 @@ const players = [
 const PlayerNumberAssignment = () => {
   const location = useLocation();
   const { matchId } = location.state || {}; // 전달된 match_id 가져오기
+  const navigate = useNavigate(); // useNavigate 사용
 
+  // 상태 관리
   const [selectedPlayer, setSelectedPlayer] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [teamSlots, setTeamSlots] = useState({
@@ -37,22 +39,67 @@ const PlayerNumberAssignment = () => {
   });
   const [absentPlayers, setAbsentPlayers] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [pomModal, setPomModal] = useState(false);
-  const [redCardModal, setRedCardModal] = useState(false);
-  const [yellowCardModal, setYellowCardModal] = useState(false);
-  const [pomPlayers, setPomPlayers] = useState([]); // Player of the Match 상태 관리
-  const [yellowCards, setYellowCards] = useState([]); // Yellow Cards 상태 추가
-  const [redCards, setRedCards] = useState([]); // Red Cards 상태 추가
 
+  // 모달 상태 및 저장/작업 중 상태
+  const [activeModal, setActiveModal] = useState(''); // 현재 활성화된 모달
+  const [savedPomPlayers, setSavedPomPlayers] = useState([]);
+  const [savedYellowCards, setSavedYellowCards] = useState([]);
+  const [savedRedCards, setSavedRedCards] = useState([]);
+  const [pomPlayers, setPomPlayers] = useState([]);
+  const [yellowCards, setYellowCards] = useState([]);
+  const [redCards, setRedCards] = useState([]);
+
+  // 드롭다운 토글
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
   const closeDropdown = () => setIsDropdownOpen(false);
 
+  // 슬롯 업데이트
   const updateTeamSlots = (team, slotIndex, playerData) => {
     const updatedSlots = [...teamSlots[team]];
     updatedSlots[slotIndex] = playerData;
     setTeamSlots({ ...teamSlots, [team]: updatedSlots });
   };
 
+  // 슬롯에 플레이어 배정 또는 제거
+  const assignPlayerToSlot = (team, slotIndex) => {
+    const selectedSlot = teamSlots[team][slotIndex];
+
+    if (selectedSlot.player) {
+      const confirmRemove = window.confirm(
+        `${selectedSlot.player} 선수를 슬롯에서 제거하시겠습니까?`
+      );
+      if (confirmRemove) {
+        updateTeamSlots(team, slotIndex, { player: null, card: [] });
+      }
+      return;
+    }
+
+    if (!selectedPlayer) {
+      alert('선수를 먼저 선택해주세요!');
+      return;
+    }
+
+    if (selectedPlayer !== '용병' && absentPlayers.includes(selectedPlayer)) {
+      alert('불참 인원은 슬롯에 넣을 수 없습니다.');
+      setSelectedPlayer('');
+      return;
+    }
+
+    if (
+      selectedPlayer !== '용병' &&
+      Object.values(teamSlots).some((team) =>
+        team.some((slot) => slot.player === selectedPlayer)
+      )
+    ) {
+      alert('이 선수는 이미 다른 슬롯에 배정되었습니다.');
+      return;
+    }
+
+    updateTeamSlots(team, slotIndex, { player: selectedPlayer, card: [] });
+    setSelectedPlayer('');
+  };
+
+  // 불참 처리
   const markPlayerAbsent = () => {
     if (!selectedPlayer) {
       alert('선수를 선택해주세요!');
@@ -73,40 +120,61 @@ const PlayerNumberAssignment = () => {
     setSelectedPlayer('');
   };
 
-  const assignPlayerToSlot = (team, slotIndex) => {
-    const selectedSlot = teamSlots[team][slotIndex];
-
-    if (selectedSlot.player) {
-      const confirmRemove = window.confirm(`${selectedSlot.player} 선수를 슬롯에서 제거하시겠습니까?`);
-      if (confirmRemove) {
-        updateTeamSlots(team, slotIndex, { player: null, card: [] });
-      }
-      return; // 제거 후 종료
-    }
-
-    if (!selectedPlayer) {
-      alert('선수를 먼저 선택해주세요!');
-      return;
-    }
-
-    if (selectedPlayer !== '용병' && absentPlayers.includes(selectedPlayer)) {
-      alert('불참 인원은 슬롯에 넣을 수 없습니다.');
-      setSelectedPlayer('');
-      return;
-    }
-
-    if (
-      selectedPlayer !== '용병' &&
-      Object.values(teamSlots).some((team) => team.some((slot) => slot.player === selectedPlayer))
-    ) {
-      alert('이 선수는 이미 다른 슬롯에 배정되었습니다.');
-      return;
-    }
-
-    updateTeamSlots(team, slotIndex, { player: selectedPlayer, card: [] });
-    setSelectedPlayer('');
+  // 모달 열기
+  const openModal = (modalType) => {
+    setActiveModal(modalType);
+    if (modalType === 'pom') setPomPlayers([...savedPomPlayers]);
+    else if (modalType === 'yellow') setYellowCards([...savedYellowCards]);
+    else if (modalType === 'red') setRedCards([...savedRedCards]);
   };
 
+  // 모달 닫기
+  const handleClose = () => {
+    setActiveModal('');
+    setPomPlayers([]);
+    setYellowCards([]);
+    setRedCards([]);
+  };
+
+  // 저장 처리
+  const handleSave = () => {
+    if (activeModal === 'pom') {
+      setSavedPomPlayers([...pomPlayers]);
+      alert(`Player of the Match: ${pomPlayers.join(', ')} 저장되었습니다.`);
+    } else if (activeModal === 'yellow') {
+      setSavedYellowCards([...yellowCards]);
+      alert(`옐로카드 부여: ${yellowCards.join(', ')} 저장되었습니다.`);
+    } else if (activeModal === 'red') {
+      setSavedRedCards([...redCards]);
+      alert(`레드카드 부여: ${redCards.join(', ')} 저장되었습니다.`);
+    }
+    handleClose();
+  };
+
+  // 카드 및 POM 선택 처리
+  const handleCardOrPOMSelection = (player, type) => {
+    let currentList, setList, maxLimit = Infinity;
+
+    if (type === 'pom') {
+      currentList = pomPlayers;
+      setList = setPomPlayers;
+      maxLimit = 3;
+    } else if (type === 'yellow') {
+      currentList = yellowCards;
+      setList = setYellowCards;
+    } else if (type === 'red') {
+      currentList = redCards;
+      setList = setRedCards;
+    }
+
+    if (currentList.includes(player)) {
+      setList((prev) => prev.filter((p) => p !== player));
+    } else if (currentList.length < maxLimit) {
+      setList((prev) => [...prev, player]);
+    }
+  };
+
+  // 게임 시작 및 종료
   const handleGameStart = () => {
     const isAllSlotsFilled = Object.values(teamSlots).every((team) =>
       team.every((slot) => slot.player !== null)
@@ -123,59 +191,24 @@ const PlayerNumberAssignment = () => {
   const handleGameEnd = () => {
     alert('경기가 종료되었습니다!');
     setIsGameStarted(false);
-    setSelectedPlayer('');
     setTeamSlots({
       red: Array(6).fill({ player: null, card: [] }),
       yellow: Array(6).fill({ player: null, card: [] }),
       blue: Array(6).fill({ player: null, card: [] }),
     });
     setAbsentPlayers([]);
-    setPomPlayers([]);
-    setYellowCards([]); // 상태 초기화
-    setRedCards([]); // 상태 초기화
-    setPomModal(false);
-    setRedCardModal(false);
-    setYellowCardModal(false);
-  };
+    setSavedPomPlayers([]);
+    setSavedYellowCards([]);
+    setSavedRedCards([]);
+    navigate('/schedule-list')
 
-  const handlePomSelection = (player) => {
-    if (pomPlayers.length >= 3) {
-      alert('Player of the Match는 최대 3명까지 선택할 수 있습니다.');
-      return;
-    }
-    setPomPlayers((prev) => [...prev, player]);
-    alert(`${player}가 Player of the Match로 선택되었습니다.`);
-  };
-
-  const handleSave = () => {
-    // 저장 로직
-    alert(`${pomPlayers.join(', ')}가(이) 저장되었습니다.`);
-  };
-
-  const handleClose = () => {
-    setPomModal(false);
-    setPomPlayers([]); // 닫을 때 선택된 플레이어 리셋
-  };
-
-  const handleCardSelection = (player, cardType) => {
-    if (cardType === 'yellow') {
-      setYellowCards((prev) => [...prev, player]); // Yellow Cards 상태 업데이트
-      alert(`${player}에게 옐로카드를 부여했습니다.`);
-    } else if (cardType === 'red') {
-      setRedCards((prev) => [...prev, player]); // Red Cards 상태 업데이트
-      alert(`${player}에게 레드카드를 부여했습니다.`);
-    }
-  };
-
+  }
   return (
-    <div className={styles.appContainer} onClick={closeDropdown}>
-      <div
-        className={`${styles.layout} ${isGameStarted ? styles.centeredLayout : ''}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className={styles.appContainer}>
+      <div className={`${styles.layout} ${isGameStarted ? styles.centeredLayout : ''}`}>
         {/* 왼쪽 선수 선택 영역 */}
         <div className={`${styles.leftContainer} ${isGameStarted ? styles.hidden : ''}`}>
-          <div className={styles.dropdownWrapper}>
+          <div className={styles.dropdownWrapper} onClick={(e) => e.stopPropagation()}>
             <button className={styles.dropdownToggle} onClick={toggleDropdown}>
               {selectedPlayer || '선수 선택'}
             </button>
@@ -187,7 +220,9 @@ const PlayerNumberAssignment = () => {
                     className={`${styles.dropdownItem} ${
                       absentPlayers.includes(player.name) ? styles.absent : ''
                     }`}
-                    onClick={() => setSelectedPlayer(player.name)}
+                    onClick={() => {
+                      setSelectedPlayer(player.name);
+                    }}
                   >
                     {player.name}
                   </div>
@@ -196,7 +231,7 @@ const PlayerNumberAssignment = () => {
             )}
           </div>
         </div>
-
+  
         {/* 오른쪽 팀 슬롯 */}
         <div className={styles.rightContainer}>
           <div className={styles.teamsContainer}>
@@ -223,7 +258,7 @@ const PlayerNumberAssignment = () => {
           </div>
         </div>
       </div>
-
+  
       {/* 하단 버튼들 */}
       <div className={styles.actionButtons}>
         {!isGameStarted ? (
@@ -237,13 +272,13 @@ const PlayerNumberAssignment = () => {
           </div>
         ) : (
           <div className={styles.fourButton}>
-            <button onClick={() => setPomModal(true)} className={styles.pomButton}>
+            <button onClick={() => openModal('pom')} className={styles.pomButton}>
               Player of the Match
             </button>
-            <button onClick={() => setRedCardModal(true)} className={styles.redCardButton}>
+            <button onClick={() => openModal('red')} className={styles.redCardButton}>
               레드카드
             </button>
-            <button onClick={() => setYellowCardModal(true)} className={styles.yellowCardButton}>
+            <button onClick={() => openModal('yellow')} className={styles.yellowCardButton}>
               옐로카드
             </button>
             <button onClick={handleGameEnd} className={styles.endGameButton}>
@@ -252,82 +287,40 @@ const PlayerNumberAssignment = () => {
           </div>
         )}
       </div>
-
-      {/* 모달 - Player of the Match */}
-      {pomModal && (
+  
+      {/* 공통 모달 */}
+      {activeModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
-            <h2>Player of the Match</h2>
+            <h2>
+              {activeModal === 'pom'
+                ? 'Player of the Match'
+                : activeModal === 'yellow'
+                ? '옐로카드 부여'
+                : '레드카드 부여'}
+            </h2>
             <div className={styles.playerGrid}>
               {players.map((player) => (
                 <button
                   key={player.id}
                   className={`${styles.playerButton} ${
-                    pomPlayers.includes(player.name) ? styles.selected : ''
+                    (activeModal === 'pom' && pomPlayers.includes(player.name)) ||
+                    (activeModal === 'yellow' && yellowCards.includes(player.name)) ||
+                    (activeModal === 'red' && redCards.includes(player.name))
+                      ? styles.selected
+                      : ''
                   }`}
-                  onClick={() => handlePomSelection(player.name)}
+                  onClick={() => handleCardOrPOMSelection(player.name, activeModal)}
                 >
                   {player.name}
                 </button>
               ))}
             </div>
             <div className={styles.modalActions}>
-              <button className={styles.saveButton} onClick={handleSave}>
+              <button onClick={handleSave} className={styles.saveButton}>
                 저장
               </button>
-              <button className={styles.closeButton} onClick={handleClose}>
-                닫기
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 레드카드 및 옐로카드 모달 */}
-      {redCardModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <h2>레드카드 부여</h2>
-            <div className={styles.playerGrid}>
-            {players.map((player) => (
-              <button 
-              key={player.id} 
-              className={`${styles.playerButton}`} 
-              onClick={() => handleCardSelection(player.name, 'red')}>
-                {player.name}
-              </button>
-            ))}
-            </div>
-            <div className={styles.modalActions}>
-              <button className={styles.saveButton} onClick={handleSave}>
-                저장
-              </button>
-              <button className={styles.closeButton} onClick={handleClose}>
-                닫기
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {yellowCardModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <h2>옐로카드 부여</h2>
-            <div className={styles.playerGrid}>
-            {players.map((player) => (
-              <button key={player.id}
-              className={`${styles.playerButton}`} 
-               onClick={() => handleCardSelection(player.name, 'yellow')}>
-                {player.name}
-              </button>
-            ))}
-            </div>
-            <div className={styles.modalActions}>
-              <button className={styles.saveButton} onClick={handleSave}>
-                저장
-              </button>
-              <button className={styles.closeButton} onClick={handleClose}>
+              <button onClick={handleClose} className={styles.closeButton}>
                 닫기
               </button>
             </div>
@@ -336,6 +329,8 @@ const PlayerNumberAssignment = () => {
       )}
     </div>
   );
+  
+
 };
 
 export default PlayerNumberAssignment;
