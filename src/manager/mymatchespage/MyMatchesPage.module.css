@@ -140,6 +140,19 @@
     padding: 15px 0;
 }
 
+.cancelButton {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.cancelButton:hover {
+    background-color: #d9363e;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .match {

@@ -10,7 +10,7 @@ const LoginPage = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:9090/auth/login", {
         method: "POST",
@@ -19,26 +19,27 @@ const LoginPage = () => {
         },
         body: JSON.stringify({ email, login_password: password }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
-        setError(errorData.message || "이메일 또는 비밀번호가 잘못되었습니다.");
+        // 에러 메시지를 alert 창으로 표시
+        alert(errorData.message || "이메일 또는 비밀번호가 잘못되었습니다.");
         return;
       }
-
+  
       const result = await response.json();
       console.log("로그인 성공:", result);
-
+  
       // 토큰과 유저 ID 저장
       localStorage.setItem("token", result.token);
       localStorage.setItem("userId", result.id);
-
+  
       // 페이지 이동
-      setError(""); // 오류 메시지 초기화
       navigate("/schedule-list");
     } catch (err) {
       console.error("로그인 에러:", err);
-      setError("서버 오류가 발생했습니다. 다시 시도해주세요.");
+      // 서버 오류 메시지를 alert 창으로 표시
+      alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -93,10 +94,6 @@ const LoginPage = () => {
         <span onClick={() => handleNavigate("/reset-password")}>
           비밀번호 재설정
         </span>{" "}
-        |{" "}
-        <span onClick={() => handleNavigate("/apply-manager")}>
-          매니저 지원하기
-        </span>
       </div>
     </div>
   );
