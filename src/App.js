@@ -18,6 +18,8 @@ import ScoreBoardPage from './manager/scoreboard/ScoreBoardPage.jsx';
 import VideoUploadPage from './manager/videoupload/VideoUploadPage.jsx';
 import MatchCautionsPage from './manager/matchcautions/MatchCautionsPage.jsx';
 import MatchFeedbackPage from './manager/matchfeedback/MatchFeedbackPage.jsx';
+import FindEmail from './manager/findemail/findemail.jsx';
+import ResetPassword from './manager/resetpassword/resetpassword.jsx';
 
 const App = () => {
   return (
@@ -25,14 +27,19 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path='/find-email' element={<FindEmail/>}/>
+        <Route path='/reset-password' element={<ResetPassword/>}/>
 
         <Route element={<MainLayout />}>
+        
           {/* 완료 */}
           <Route path="/schedule-list" element={<ScheduleList />} />
           <Route path="/match-detail/:matchId" element={<MatchDetailPage />} />
+          <Route path="/my-matches" element={<MyMatchesPage />} />
+          <Route path="/feedback" element={<MatchFeedbackPage />} />
+
           {/* 미완료 */}
           <Route path="/manager-info" element={<ManagerInfoPage />} />
-          <Route path="/my-matches" element={<MyMatchesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/reviews" element={<MyReviews />} />
           <Route path="/team-management" element={<TeamManagementPage />} />
@@ -41,8 +48,6 @@ const App = () => {
           <Route path="/score-board" element={<ScoreBoardPage />} /> 
           <Route path="/video-upload" element={<VideoUploadPage />} /> 
           <Route path="/match-cautions" element={<MatchCautionsPage />} /> 
-          
-          <Route path="/feedback" element={<MatchFeedbackPage />} />
         </Route>
 
       </Routes>

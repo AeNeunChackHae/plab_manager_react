@@ -12,7 +12,7 @@ const SignupPage = () => {
   });
 
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -47,16 +47,17 @@ const SignupPage = () => {
         return;
       }
 
-      const result = await response.json();
-      setSuccessMessage('회원가입이 완료되었습니다!');
       setError('');
-      console.log('Signup successful:', result);
-
-      // 회원가입 성공 시 로그인 페이지로 이동
+      setIsModalOpen(true); // 회원가입 성공 시 모달 열기
     } catch (err) {
       setError('서버 오류');
       console.error('Signup error:', err);
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate('/'); // 로그인 페이지로 이동
   };
 
   return (
@@ -127,24 +128,34 @@ const SignupPage = () => {
         </button>
       </form>
       {error && <p className={styles.error}>{error}</p>}
-      {successMessage && <p className={styles.success}>{successMessage}</p>}
+
+      {/* 모달 컴포넌트 */}
+      {isModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>회원가입 완료</h3>
+            <p>회원가입이 성공적으로 완료되었습니다!</p>
+            <button onClick={closeModal} className={styles.modalButton}>
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 추가 링크 섹션 */}
       <div>
         <button onClick={() => navigate('/')} className={styles.loginButton}>
           이미 회원이신가요? 로그인하러가기
         </button>
       </div>
       <div className={styles.links}>
-        <button onClick={() => navigate('/find-email')} className={styles.linkButton}>
+        <span onClick={() => navigate('/find-email')} className={styles.linkButton}>
           이메일 찾기
-        </button>
-        |
-        <button onClick={() => navigate('/reset-password')} className={styles.linkButton}>
+        </span>
+        {" | "}
+        <span onClick={() => navigate('/reset-password')} className={styles.linkButton}>
           비밀번호 재설정
-        </button>
-        |
-        <button onClick={() => navigate('/apply-manager')} className={styles.linkButton}>
-          매니저 지원하기
-        </button>
+        </span>
       </div>
     </div>
   );

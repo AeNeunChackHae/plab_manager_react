@@ -45,6 +45,7 @@ const MyMatchesPage = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                     body: JSON.stringify({ userId }), // 유저 ID 포함
                 });
@@ -116,6 +117,38 @@ const MyMatchesPage = () => {
 
         // 조건 충족 시 페이지 이동
         navigate("/player-numbers", { state: { matchId: id } });
+    };
+
+    const handleCancelClick = async (matchId) => {
+        const confirmCancel = window.confirm("신청 취소하시겠습니까?");
+        if (!confirmCancel) return;
+    
+        try {
+            const response = await fetch("http://localhost:9090/my-match/cancel", {
+                method: "POST", // POST 방식으로 변경
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({ matchId }),
+            });
+    
+            if (!response.ok) {
+                throw new Error("취소 요청에 실패했습니다.");
+            }
+    
+            alert("신청이 취소되었습니다!");
+            // 성공적으로 취소된 경우 UI 갱신
+            setSchedules((prevSchedules) =>
+                prevSchedules.map((schedule) => ({
+                    ...schedule,
+                    schedules: schedule.schedules.filter((match) => match.id !== matchId),
+                }))
+            );
+        } catch (err) {
+            console.error(err);
+            alert("취소 요청 처리 중 오류가 발생했습니다.");
+        }
     };
 
     const handleMonthChange = (direction) => {
@@ -235,6 +268,15 @@ const MyMatchesPage = () => {
                             >
                                 <p>{`${match.type} | ${match.startTime} - ${match.endTime}`}</p>
                                 <p>{`${match.location} | ${match.region} | ${match.level}`}</p>
+                                <button
+                                    className={styles.cancelButton}
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // 부모 div의 onClick 이벤트 방지
+                                        handleCancelClick(match.id);
+                                    }}
+                                >
+                                    신청 취소
+                                </button>
                             </div>
                         ))
                     ) : (

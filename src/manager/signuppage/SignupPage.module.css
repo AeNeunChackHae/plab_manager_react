@@ -48,7 +48,8 @@
 .button {
     height: 50px;
     width: 350px;
-    margin-bottom: 50px;
+    margin-top: 15px;
+    margin-bottom: 40px;
     font-size: 18px;
     font-weight: bold;
     color: white;
@@ -103,6 +104,7 @@
     background-color: #ff5a5f;
     text-decoration: none;
     border-radius: 10px;
+    border: none;
     padding: 12px 24px;
     cursor: pointer;
 }
@@ -110,3 +112,56 @@
 .loginButton:hover {
     background-color: #ff4045;
 }
+
+/* 모달 관련 스타일 */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .modal p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .modalButton {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .modalButton:hover {
+    background-color: #555;
+  }
+  
+  .modalHeader{
+    text-align: center;
+    align-items: center;
+  }
