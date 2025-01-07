@@ -21,6 +21,7 @@ const PlayerNumberAssignment = () => {
 
   // 모달 상태 및 저장/작업 중 상태
   const [activeModal, setActiveModal] = useState(''); // 현재 활성화된 모달
+  const [activePlayerModal, setActivePlayerModal] = useState(null);
   const [savedPomPlayers, setSavedPomPlayers] = useState([]);
   const [savedYellowCards, setSavedYellowCards] = useState([]);
   const [savedRedCards, setSavedRedCards] = useState([]);
@@ -380,6 +381,43 @@ const adjustPlayerLevel = async (userId, levelChange) => {
     alert("팀 분배에 실패했습니다. 남은 인원을 확인하고 다시 시도하세요.");
   }
 };
+// 슬롯 클릭 시 모달 열기
+const handleSlotClick = (team, slotIndex) => {
+  const slot = teamSlots[team][slotIndex];
+  if (slot.player) {
+    setActivePlayerModal(slot.player);
+  } else {
+    alert('이 슬롯에는 플레이어가 없습니다.');
+  }
+};
+
+// 레벨 조정 함수
+const handleLevelChange = async (levelChange) => {
+  if (!activePlayerModal) return;
+
+  const newLevel = activePlayerModal.level_code + levelChange;
+
+  if (newLevel < 0) {
+    alert('레벨은 0 이하로 설정할 수 없습니다.');
+    return;
+  }
+
+  // 레벨 업데이트 요청
+  try {
+    await adjustPlayerLevel(activePlayerModal.id, levelChange);
+    setActivePlayerModal((prev) => ({
+      ...prev,
+      level_code: newLevel,
+    }));
+  } catch (error) {
+    console.error('레벨 조정 오류:', error);
+  }
+};
+
+// 모달 닫기
+const closePlayerModal = () => {
+  setActivePlayerModal(null);
+};
 
   // 게임 시작 및 종료
 const handleGameStart = () => {
@@ -467,14 +505,18 @@ return (
                 alt={`${team} Vest`}
                 className={styles.teamVest}
               />
-              <div className={styles.slots}>
+             <div className={styles.slots}>
                 {teamSlots[team].map((slot, index) => (
                   <div
                     key={index}
                     className={styles.slot}
-                    onClick={() => assignPlayerToSlot(team, index)}
+                    onClick={
+                      isGameStarted
+                        ? () => handleSlotClick(team, index) // 경기 시작 후: 모달 열기
+                        : () => assignPlayerToSlot(team, index) // 경기 시작 전: 선수 배치
+                    }
                   >
-                    {slot.player ? slot.player.username : `#${index + 1}`}
+                    {slot.player ? slot.player.username : `#${index + 1}`} 
                   </div>
                 ))}
               </div>
@@ -517,6 +559,38 @@ return (
         </div>
       )}
     </div>
+        {/* 레벨 조정 모달 */}
+        {activePlayerModal && (
+      <div className={styles.modalOverlay}>
+        <div className={styles.modalContent}>
+          <h2>플레이어 정보</h2>
+          <div>
+            <p>이름: {activePlayerModal.username}</p>
+            <p>레벨: {activePlayerModal.level_code}</p>
+          </div>
+          <div className={styles.levelControls}>
+            <button
+              className={styles.levelButton}
+              onClick={() => handleLevelChange(-1)}
+            >
+              -
+            </button>
+            <span className={styles.levelDisplay}>
+              {activePlayerModal.level_code}
+            </span>
+            <button
+              className={styles.levelButton}
+              onClick={() => handleLevelChange(1)}
+            >
+              +
+            </button>
+          </div>
+          <button className={styles.closeButton} onClick={closePlayerModal}>
+            닫기
+          </button>
+        </div>
+      </div>
+    )}
 
     {/* 공통 모달 */}
     {activeModal && (
