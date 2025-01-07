@@ -33,7 +33,7 @@ const MyMatchesPage = () => {
 
     useEffect(() => {
         const fetchSchedules = async () => {
-            const userId = localStorage.getItem("userId"); // 로컬에서 유저 ID 가져오기
+            const userId = localStorage.getItem("userId");
             if (!userId) {
                 setError("User ID not found in localStorage.");
                 setIsLoading(false);
@@ -45,9 +45,9 @@ const MyMatchesPage = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
-                    body: JSON.stringify({ userId }), // 유저 ID 포함
+                    body: JSON.stringify({ userId }),
                 });
 
                 if (!response.ok) {
@@ -56,7 +56,6 @@ const MyMatchesPage = () => {
 
                 const result = await response.json();
 
-                // 날짜별 데이터 그룹화
                 const groupedByDate = {};
                 result.data.forEach((event) => {
                     const eventDate = getLocalDateString(event.start_time);
@@ -65,10 +64,10 @@ const MyMatchesPage = () => {
                     }
                     groupedByDate[eventDate].push({
                         id: event.match_id,
-                        statusCode: event.status_code, // 추가된 상태 코드
+                        statusCode: event.status_code,
                         startTime: getTime24HourFormat(event.start_time),
                         endTime: getTime24HourFormat(event.end_time),
-                        matchStartTime: new Date(event.start_time), // 시작 시간
+                        matchStartTime: new Date(event.start_time),
                         location: event.stadium_name,
                         region: REGION_MAP[event.region],
                         gender: event.gender === 0 ? "남자" : "여자",
@@ -115,30 +114,28 @@ const MyMatchesPage = () => {
             return;
         }
 
-        // 조건 충족 시 페이지 이동
         navigate("/player-numbers", { state: { matchId: id } });
     };
 
     const handleCancelClick = async (matchId) => {
         const confirmCancel = window.confirm("신청 취소하시겠습니까?");
         if (!confirmCancel) return;
-    
+
         try {
             const response = await fetch("http://localhost:9090/my-match/cancel", {
-                method: "POST", // POST 방식으로 변경
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({ matchId }),
             });
-    
+
             if (!response.ok) {
                 throw new Error("취소 요청에 실패했습니다.");
             }
-    
+
             alert("신청이 취소되었습니다!");
-            // 성공적으로 취소된 경우 UI 갱신
             setSchedules((prevSchedules) =>
                 prevSchedules.map((schedule) => ({
                     ...schedule,
@@ -162,44 +159,51 @@ const MyMatchesPage = () => {
     const generateCalendar = () => {
         const year = selectedDate.getFullYear();
         const month = selectedDate.getMonth();
-        const firstDay = new Date(year, month, 1).getDay(); // 1일의 요일
+        const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const days = [];
-
-        // 이전 달 마지막 날짜 계산
+    
         const lastDayPrevMonth = new Date(year, month, 0).getDate();
-
-        // 첫 주의 빈 공간 채우기
+    
+        // 이전 달의 마지막 일부터 추가
         for (let i = firstDay - 1; i >= 0; i--) {
             days.push({
                 date: lastDayPrevMonth - i,
                 isCurrentMonth: false,
             });
         }
-
-        // 이번 달 날짜 추가
+    
+        // 이번 달의 날짜 추가
         for (let i = 1; i <= daysInMonth; i++) {
             days.push({
                 date: i,
                 isCurrentMonth: true,
             });
         }
-
-        // 다음 달 날짜 추가
+    
+        // 한 주를 채우기 위한 빈 날짜 추가
         while (days.length % 7 !== 0) {
             days.push({
                 date: days.length - daysInMonth - firstDay + 1,
                 isCurrentMonth: false,
             });
         }
-
+    
         return days;
     };
 
     const calendarDays = generateCalendar();
+    
     const filteredMatches = schedules.find(
         (schedule) => schedule.date === getLocalDateString(selectedDate)
     );
+    const getMatchesForDate = (date) => {
+        const matchData = schedules.find(
+            (schedule) => schedule.date === getLocalDateString(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date))
+        );
+        return matchData ? matchData.schedules.length : 0;  // 매치가 있으면 그 수 반환
+    };
+    
 
     return (
         <div className={styles.container}>
@@ -229,28 +233,24 @@ const MyMatchesPage = () => {
                     ))}
                 </div>
 
-                <div className={styles.dates}>
-                    {calendarDays.map((day, index) => (
-                        <span
-                            key={index}
-                            className={
-                                day.isCurrentMonth
-                                    ? day.date === selectedDate.getDate()
-                                        ? styles.selectedDate
-                                        : ""
-                                    : styles.otherMonth
-                            }
-                            onClick={() =>
-                                day.isCurrentMonth ? handleDateClick(day.date) : null
-                            }
-                            style={{
-                                color: index % 7 === 0 ? "red" : index % 7 === 6 ? "blue" : "inherit",
-                            }}
-                        >
-                            {day.date}
-                        </span>
-                    ))}
-                </div>
+               
+<div className={styles.dates}>
+    {calendarDays.map((day, index) => {
+        const matchesCount = getMatchesForDate(day.date); // 해당 날짜의 매치 수를 확인
+        return (
+            <span
+                key={index}
+                className={`${day.isCurrentMonth ? (day.date === selectedDate.getDate() ? styles.selectedDate : "") : styles.otherMonth} ${matchesCount > 0 ? styles.hasMatch : ""}`}
+                onClick={() => (day.isCurrentMonth ? handleDateClick(day.date) : null)}
+                style={{
+                    color: index % 7 === 0 ? "red" : index % 7 === 6 ? "blue" : "inherit",
+                }}
+            >
+                {day.date}
+            </span>
+        );
+    })}
+</div>
             </div>
 
             {isLoading ? (
@@ -260,25 +260,33 @@ const MyMatchesPage = () => {
             ) : (
                 <div className={styles.matchesContainer}>
                     {filteredMatches && filteredMatches.schedules.length > 0 ? (
-                        filteredMatches.schedules.map((match, index) => (
-                            <div
-                                key={index}
-                                className={styles.match}
-                                onClick={() => handleMatchClick(match)}
-                            >
-                                <p>{`${match.type} | ${match.startTime} - ${match.endTime}`}</p>
-                                <p>{`${match.location} | ${match.region} | ${match.level}`}</p>
-                                <button
-                                    className={styles.cancelButton}
-                                    onClick={(e) => {
-                                        e.stopPropagation(); // 부모 div의 onClick 이벤트 방지
-                                        handleCancelClick(match.id);
-                                    }}
+                        filteredMatches.schedules.map((match, index) => {
+                            const matchDate = new Date(match.matchStartTime);
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+
+                            return (
+                                <div
+                                    key={index}
+                                    className={styles.match}
+                                    onClick={() => handleMatchClick(match)}
                                 >
-                                    신청 취소
-                                </button>
-                            </div>
-                        ))
+                                    <p>{`${match.type} | ${match.startTime} - ${match.endTime}`}</p>
+                                    <p>{`${match.location} | ${match.region} | ${match.level}`}</p>
+                                    {matchDate >= today && (
+                                        <button
+                                            className={styles.cancelButton}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleCancelClick(match.id);
+                                            }}
+                                        >
+                                            신청 취소
+                                        </button>
+                                    )}
+                                </div>
+                            );
+                        })
                     ) : (
                         <div className={styles.noMatches}>선택한 날짜에 매치 정보가 없습니다.</div>
                     )}

@@ -58,13 +58,18 @@
 }
 
 .dates span {
-    width: calc(100% / 7 - 10px);
-    /* 각 날짜 칸의 너비를 일주일에 맞게 조정, 간격을 위해 -10px */
+    width: calc(100% / 7 - 10px); /* 날짜 칸의 너비를 일주일에 맞게 설정 */
     margin: 5px;
     padding: 12px 0;
     text-align: center;
     box-sizing: border-box;
-    /* 패딩과 보더를 너비에 포함 */
+    height: 80px;  /* 날짜 칸의 고정 높이 설정 */
+    position: relative;
+}
+
+/* 매치가 있는 날짜에만 보더라인을 추가 */
+.dates span.hasMatch {
+    border-bottom: 3px solid #004c9c;  /* 매치가 있는 날짜는 아래에 파란색 보더라인 추가 */
 }
 
 .dates span:hover {
