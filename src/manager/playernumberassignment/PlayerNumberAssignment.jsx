@@ -25,6 +25,7 @@ const PlayerNumberAssignment = () => {
   const [savedPomPlayers, setSavedPomPlayers] = useState([]);
   const [savedYellowCards, setSavedYellowCards] = useState([]);
   const [savedRedCards, setSavedRedCards] = useState([]);
+  const [savedLevels, setSavedLevels] = useState([]);
   const [pomPlayers, setPomPlayers] = useState([]);
   const [yellowCards, setYellowCards] = useState([]);
   const [redCards, setRedCards] = useState([]);
@@ -70,7 +71,6 @@ const PlayerNumberAssignment = () => {
     if (matchId) fetchPlayers();
   }, [matchId]);
 
-  // 서버로 카드 데이터 저장
   const handleGameEnd = async () => {
     try {
       // 데이터 수집
@@ -97,14 +97,26 @@ const PlayerNumberAssignment = () => {
         })),
       ];
   
-      // 디버깅 로그 추가
-      // console.log('cardsToSave:', cardsToSave);
-      // console.log('POM Players:', savedPomPlayers);
-      // console.log('Red Cards:', savedRedCards);
-      // console.log('Yellow Cards:', savedYellowCards);
-      // console.log('Absent Players:', absentPlayers);
+      // 레벨 업데이트 요청
+      const levelUpdateResponse = await fetch('http://localhost:9090/match/update-levels', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          players: savedLevels.map((level) => ({
+            userId: level.userId,
+            level: level.level,
+          })),
+        }),
+      });
   
-      // 서버 요청
+      if (!levelUpdateResponse.ok) {
+        throw new Error('레벨 업데이트 실패');
+      }
+  
+      // 레벨 업데이트가 완료되었으면 카드 저장 요청
       const response = await fetch('http://localhost:9090/match/save-cards', {
         method: 'POST',
         headers: {
@@ -114,7 +126,6 @@ const PlayerNumberAssignment = () => {
         body: JSON.stringify({ matchId, cards: cardsToSave }),
       });
   
-      // 서버 응답 확인
       if (response.ok) {
         alert('경기 데이터가 성공적으로 저장되었습니다.');
         resetGameState(); // 상태 초기화
@@ -131,6 +142,7 @@ const PlayerNumberAssignment = () => {
   };
   
   
+  
   // 드롭다운 토글
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
   const closeDropdown = () => setIsDropdownOpen(false);
@@ -144,35 +156,35 @@ const PlayerNumberAssignment = () => {
   // console.log('players',players)
 
   // 플레이어의 레벨을 조정하는 함수
-const adjustPlayerLevel = async (userId, levelChange) => {
-  try {
-    // 서버로 요청 보내기
-    const response = await fetch('http://localhost:9090/match/level', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ userId, levelChange }),
-    });
+// const adjustPlayerLevel = async (userId, levelChange) => {
+//   try {
+//     // 서버로 요청 보내기
+//     const response = await fetch('http://localhost:9090/match/level', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${localStorage.getItem('token')}`,
+//       },
+//       body: JSON.stringify({ userId, levelChange }),
+//     });
 
-    if (response.ok) {
-      const updatedPlayer = await response.json();
-      // 성공적으로 업데이트된 데이터를 반영
-      setPlayers((prevPlayers) =>
-        prevPlayers.map((player) =>
-          player.id === userId ? { ...player, level_code: updatedPlayer.level_code } : player
-        )
-      );
-      alert(`${updatedPlayer.username}의 레벨이 ${updatedPlayer.level_code}로 업데이트되었습니다.`);
-    } else {
-      throw new Error('레벨 조정 실패');
-    }
-  } catch (error) {
-    console.error('레벨 조정 오류:', error);
-    alert('레벨 조정 중 문제가 발생했습니다.');
-  }
-};
+//     if (response.ok) {
+//       const updatedPlayer = await response.json();
+//       // 성공적으로 업데이트된 데이터를 반영
+//       setPlayers((prevPlayers) =>
+//         prevPlayers.map((player) =>
+//           player.id === userId ? { ...player, level_code: updatedPlayer.level_code } : player
+//         )
+//       );
+//       alert(`${updatedPlayer.username}의 레벨이 ${updatedPlayer.level_code}로 업데이트되었습니다.`);
+//     } else {
+//       throw new Error('레벨 조정 실패');
+//     }
+//   } catch (error) {
+//     console.error('레벨 조정 오류:', error);
+//     alert('레벨 조정 중 문제가 발생했습니다.');
+//   }
+// };
 
 
   // 슬롯에 플레이어 배정 또는 제거
@@ -381,6 +393,7 @@ const adjustPlayerLevel = async (userId, levelChange) => {
     alert("팀 분배에 실패했습니다. 남은 인원을 확인하고 다시 시도하세요.");
   }
 };
+
 // 슬롯 클릭 시 모달 열기
 const handleSlotClick = (team, slotIndex) => {
   const slot = teamSlots[team][slotIndex];
@@ -392,7 +405,7 @@ const handleSlotClick = (team, slotIndex) => {
 };
 
 // 레벨 조정 함수
-const handleLevelChange = async (levelChange) => {
+const handleLevelChange = (levelChange) => {
   if (!activePlayerModal) return;
 
   const newLevel = activePlayerModal.level_code + levelChange;
@@ -402,17 +415,35 @@ const handleLevelChange = async (levelChange) => {
     return;
   }
 
-  // 레벨 업데이트 요청
-  try {
-    await adjustPlayerLevel(activePlayerModal.id, levelChange);
-    setActivePlayerModal((prev) => ({
-      ...prev,
-      level_code: newLevel,
-    }));
-  } catch (error) {
-    console.error('레벨 조정 오류:', error);
+  // 레벨 값 업데이트
+  setActivePlayerModal((prev) => ({
+    ...prev,
+    level_code: newLevel,
+  }));
+};
+
+const handleSaveLevel = () => {
+  if (activePlayerModal) {
+    // 이미 저장된 레벨 목록에 추가
+    setSavedLevels((prev) => [
+      ...prev.filter((level) => level.userId !== activePlayerModal.id), // 같은 선수가 있을 경우 덮어쓰기
+      { userId: activePlayerModal.id, level: activePlayerModal.level_code },
+    ]);
+
+    // players 상태에서 해당 선수의 레벨 업데이트
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.id === activePlayerModal.id
+          ? { ...player, level_code: activePlayerModal.level_code }
+          : player
+      )
+    );
+
+    alert(`${activePlayerModal.username}의 레벨이 저장되었습니다.`);
+    setActivePlayerModal(null); // 모달 닫기
   }
 };
+
 
 // 모달 닫기
 const closePlayerModal = () => {
@@ -585,6 +616,9 @@ return (
               +
             </button>
           </div>
+          <button className={styles.saveButton} onClick={handleSaveLevel}>
+            저장
+          </button>
           <button className={styles.closeButton} onClick={closePlayerModal}>
             닫기
           </button>
