@@ -58,6 +58,7 @@ const PlayerNumberAssignment = () => {
           ];
   
           setPlayers(playersWithMercenary);
+          console.log('서버에서 플레이어스 데이터 가져옴')
           // console.log('playersWithMercenary 가져와서 가공된 값값',playersWithMercenary)
         } else {
           throw new Error('플레이어 목록 가져오기 실패');
@@ -94,8 +95,9 @@ const PlayerNumberAssignment = () => {
           userId: player.id,
           cardType: 1, // 불참
           descriptionCode: 0,
-        })),
-      ];
+        }))
+      ].filter(card => card !== null);  // null 값을 제거
+      console.log('cardsToSave',cardsToSave)
   
       // 레벨 업데이트 요청
       const levelUpdateResponse = await fetch('http://localhost:9090/match/update-levels', {
@@ -105,12 +107,13 @@ const PlayerNumberAssignment = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({
-          players: savedLevels.map((level) => ({
-            userId: level.userId,
-            level: level.level,
+          players: players.filter(player => player.id !== 0).map(player => ({
+            userId: player.id,
+            level: player.level_code,
           })),
         }),
       });
+      console.log('레벨 업데이트 요청')
   
       if (!levelUpdateResponse.ok) {
         throw new Error('레벨 업데이트 실패');
@@ -135,6 +138,7 @@ const PlayerNumberAssignment = () => {
         console.error('Server Error:', errorData);
         throw new Error('경기 데이터 저장 실패');
       }
+      console.log('레벨 업데이트 요청 후, 카드 저장 요청')
     } catch (error) {
       console.error('경기 데이터 저장 오류:', error);
       alert('경기 데이터 저장 중 오류가 발생했습니다.');
@@ -152,6 +156,7 @@ const PlayerNumberAssignment = () => {
     const updatedSlots = [...teamSlots[team]];
     updatedSlots[slotIndex] = playerData;
     setTeamSlots({ ...teamSlots, [team]: updatedSlots });
+    console.log('슬롯 업데이트')
   };
   // console.log('players',players)
 
@@ -226,6 +231,7 @@ const PlayerNumberAssignment = () => {
   
     updateTeamSlots(team, slotIndex, { player: selectedPlayer, card: [] });
     setSelectedPlayer('');
+    console.log('슬롯 플레이어 배정')
   };
   
   
@@ -264,7 +270,7 @@ const PlayerNumberAssignment = () => {
       setTeamSlots(updatedTeamSlots);
       alert(`${selectedPlayer.username}이(가) 불참으로 지정되었습니다.`);
     }
-  
+    // console.log('불참처리')
     // 선수 선택 초기화
     setSelectedPlayer('');
   };
@@ -406,7 +412,7 @@ const handleSlotClick = (team, slotIndex) => {
 
 // 레벨 조정 함수
 const handleLevelChange = (levelChange) => {
-  if (!activePlayerModal) return;
+  if (!activePlayerModal) return;  // activePlayerModal이 존재할 때만
 
   const newLevel = activePlayerModal.level_code + levelChange;
 
@@ -415,34 +421,51 @@ const handleLevelChange = (levelChange) => {
     return;
   }
 
-  // 레벨 값 업데이트
+  // activePlayerModal의 레벨을 업데이트
   setActivePlayerModal((prev) => ({
     ...prev,
-    level_code: newLevel,
+    level_code: newLevel, // 레벨 변경
   }));
+
+  // players 상태에서도 해당 선수를 업데이트
+  setPlayers((prevPlayers) =>
+    prevPlayers.map((player) =>
+      player.id === activePlayerModal.id
+        ? { ...player, level_code: newLevel } // 해당 선수의 레벨 실시간으로 업데이트
+        : player
+    )
+  );
 };
 
+// 저장된 레벨 저장 함수
 const handleSaveLevel = () => {
   if (activePlayerModal) {
-    // 이미 저장된 레벨 목록에 추가
-    setSavedLevels((prev) => [
-      ...prev.filter((level) => level.userId !== activePlayerModal.id), // 같은 선수가 있을 경우 덮어쓰기
-      { userId: activePlayerModal.id, level: activePlayerModal.level_code },
-    ]);
-
-    // players 상태에서 해당 선수의 레벨 업데이트
+    // players 상태에서 해당 선수를 업데이트
     setPlayers((prevPlayers) =>
       prevPlayers.map((player) =>
         player.id === activePlayerModal.id
-          ? { ...player, level_code: activePlayerModal.level_code }
+          ? { ...player, level_code: activePlayerModal.level_code } // 레벨 업데이트
           : player
       )
     );
+
+    // 레벨 저장
+    setSavedLevels((prev) => [
+      ...prev.filter((level) => level.userId !== activePlayerModal.id), // 같은 선수가 있을 경우 덮어쓰기
+      { userId: activePlayerModal.id, level: activePlayerModal.level_code }, // 레벨 저장
+    ]);
+
+    // level 변경 후, activePlayerModal을 갱신하여 UI에 즉시 반영
+    setActivePlayerModal((prev) => ({
+      ...prev,
+      level_code: activePlayerModal.level_code, // 레벨 업데이트
+    }));
 
     alert(`${activePlayerModal.username}의 레벨이 저장되었습니다.`);
     setActivePlayerModal(null); // 모달 닫기
   }
 };
+
 
 
 // 모달 닫기
@@ -592,39 +615,37 @@ return (
     </div>
         {/* 레벨 조정 모달 */}
         {activePlayerModal && (
-      <div className={styles.modalOverlay}>
-        <div className={styles.modalContent}>
-          <h2>플레이어 정보</h2>
-          <div>
-            <p>이름: {activePlayerModal.username}</p>
-            <p>레벨: {activePlayerModal.level_code}</p>
-          </div>
-          <div className={styles.levelControls}>
-            <button
-              className={styles.levelButton}
-              onClick={() => handleLevelChange(-1)}
-            >
-              -
-            </button>
-            <span className={styles.levelDisplay}>
-              {activePlayerModal.level_code}
-            </span>
-            <button
-              className={styles.levelButton}
-              onClick={() => handleLevelChange(1)}
-            >
-              +
-            </button>
-          </div>
-          <button className={styles.saveButton} onClick={handleSaveLevel}>
-            저장
-          </button>
-          <button className={styles.closeButton} onClick={closePlayerModal}>
-            닫기
-          </button>
-        </div>
+  <div className={styles.modalOverlay}>
+    <div className={styles.modalContent}>
+      <h2>플레이어 정보</h2>
+      <div>
+        <p>이름: {activePlayerModal.username}</p>
+        <p>레벨: {activePlayerModal.level_code}</p> {/* 레벨 실시간 반영 */}
       </div>
-    )}
+      <div className={styles.levelControls}>
+        <button
+          className={styles.levelButton}
+          onClick={() => handleLevelChange(-1)}  // 레벨 감소
+        >
+          -
+        </button>
+        <span className={styles.levelDisplay}>
+          {activePlayerModal.level_code}  {/* 실시간으로 변경된 레벨 표시 */}
+        </span>
+        <button
+          className={styles.levelButton}
+          onClick={() => handleLevelChange(1)}  // 레벨 증가
+        >
+          +
+        </button>
+      </div>
+      <button className={styles.saveButton} onClick={handleSaveLevel}>저장</button>
+      <button className={styles.closeButton} onClick={closePlayerModal}>닫기</button>
+    </div>
+  </div>
+)}
+
+
 
     {/* 공통 모달 */}
     {activeModal && (
