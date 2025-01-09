@@ -29,8 +29,6 @@ const App = () => {
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/find-email" element={<FindEmail />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/update-password" element={<UpdatePassword />} />
 
         <Route element={<MainLayout />}>
           {/* 완료 */}
@@ -38,6 +36,8 @@ const App = () => {
           <Route path="/match-detail/:matchId" element={<MatchDetailPage />} />
           <Route path="/my-matches" element={<MyMatchesPage />} />
           <Route path="/feedback" element={<MatchFeedbackPage />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/update-password" element={<UpdatePassword />} />
 
           {/* 미완료 */}
           <Route path="/manager-info" element={<ManagerInfoPage />} />

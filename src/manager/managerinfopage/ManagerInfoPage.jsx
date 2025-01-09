@@ -71,10 +71,10 @@ const ManagerInfoPage = () => {
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         {/* 사용자 정보 */}
-        <div className={styles.infoSection}>
-          <h1 className={styles.infoText}>{managerInfo.name}</h1>
-          <p className={styles.infoText}>{managerInfo.email}</p>
-          <p className={styles.infoText}>{managerInfo.phonenumber}</p>
+        <div className="infoSection">
+          <h2 className="infoText">{managerInfo.name}</h2>
+          <p className="infoText">{managerInfo.email}</p>
+          <p className="infoText">{managerInfo.phonenumber}</p>
 
           {/* 네비게이션 버튼 */}
           <div className={styles.navButtons}>

@@ -102,44 +102,44 @@ const PasswordChange = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       {/* 이메일 표시 */}
-      <p className={styles.email}>{email || "이메일을 불러오는 중입니다..."}</p>
+      <p className="email">{email || "이메일을 불러오는 중입니다..."}</p>
 
-      <div className={styles.section}>
-        <label className={styles.label}>기존 비밀번호:</label>
+      <div className="section">
+        <label className="label">기존 비밀번호 </label>
         <input
           type="password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          className={styles.input}
+          className="input"
         />
       </div>
 
-      <div className={styles.section}>
-        <label className={styles.label}>새 비밀번호:</label>
+      <div className="section">
+        <label className="label">새 비밀번호 </label>
         <input
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className={styles.input}
+          className="input"
         />
-        <ul className={styles.passwordHint}>
+        <ul className="passwordHint">
           <li>비밀번호는 최소 8자 이상이어야 합니다.</li>
         </ul>
       </div>
 
-      <div className={styles.section}>
-        <label className={styles.label}>새 비밀번호 (확인):</label>
+      <div className="section">
+        <label className="label">새 비밀번호(확인) </label>
         <input
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className={styles.input}
+          className="input"
         />
       </div>
 
-      <button className={styles.saveButton} onClick={handleSave}>
+      <button className="saveButton" onClick={handleSave}>
         저장하기
       </button>
     </div>
