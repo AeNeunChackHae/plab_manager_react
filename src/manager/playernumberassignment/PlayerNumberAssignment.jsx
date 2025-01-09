@@ -96,8 +96,48 @@ const PlayerNumberAssignment = () => {
           cardType: 1, // 불참
           descriptionCode: 0,
         }))
+
       ].filter(card => card !== null);  // null 값을 제거
       console.log('cardsToSave',cardsToSave)
+
+      const absentPlayersToUpdate = absentPlayers.map((player) => ({
+        match_id: matchId,
+        user_id: player.id,
+        status_code: 2, // 불참 상태 코드
+      }));
+
+      const playersToSave = [];
+      Object.keys(teamSlots).forEach((teamName, teamIndex) => {
+        teamSlots[teamName].forEach((slot, slotIndex) => {
+          if (slot.player && slot.player.id !== 0) { // 용병 제외
+            playersToSave.push({
+              match_id: matchId,
+              user_id: slot.player.id,
+              user_team: teamIndex, // 0: 빨강, 1: 노랑, 2: 파랑
+              user_number: slotIndex  // 슬롯 번호 (1부터 시작)
+            });
+          }
+        });
+      });
+      console.log('저장할 선수 데이터:', playersToSave);
+      console.log('불참 처리할 유저:', absentPlayersToUpdate);
+
+      const positionsResponse = await fetch('http://localhost:9090/match/update-positions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ 
+          matchId, 
+          players: playersToSave, 
+          absentPlayers: absentPlayersToUpdate, // 불참 유저 추가
+        }),
+      });
+
+      if (!positionsResponse.ok) {
+        throw new Error('선수 포지션 저장 실패');
+      }
   
       // 레벨 업데이트 요청
       const levelUpdateResponse = await fetch('http://localhost:9090/match/update-levels', {
@@ -159,38 +199,6 @@ const PlayerNumberAssignment = () => {
     console.log('슬롯 업데이트')
   };
   // console.log('players',players)
-
-  // 플레이어의 레벨을 조정하는 함수
-// const adjustPlayerLevel = async (userId, levelChange) => {
-//   try {
-//     // 서버로 요청 보내기
-//     const response = await fetch('http://localhost:9090/match/level', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${localStorage.getItem('token')}`,
-//       },
-//       body: JSON.stringify({ userId, levelChange }),
-//     });
-
-//     if (response.ok) {
-//       const updatedPlayer = await response.json();
-//       // 성공적으로 업데이트된 데이터를 반영
-//       setPlayers((prevPlayers) =>
-//         prevPlayers.map((player) =>
-//           player.id === userId ? { ...player, level_code: updatedPlayer.level_code } : player
-//         )
-//       );
-//       alert(`${updatedPlayer.username}의 레벨이 ${updatedPlayer.level_code}로 업데이트되었습니다.`);
-//     } else {
-//       throw new Error('레벨 조정 실패');
-//     }
-//   } catch (error) {
-//     console.error('레벨 조정 오류:', error);
-//     alert('레벨 조정 중 문제가 발생했습니다.');
-//   }
-// };
-
 
   // 슬롯에 플레이어 배정 또는 제거
   const assignPlayerToSlot = (team, slotIndex) => {
@@ -659,25 +667,29 @@ return (
               : '레드카드 부여'}
           </h2>
           <div className={styles.playerGrid}>
-            {/* 용병 제외 */}
-            {players
-              .filter((player) => player.id !== 0) // 용병 제외 조건
-              .map((player) => (
-                <button
-                  key={player.id}
-                  className={`${styles.playerButton} ${
-                    (activeModal === 'pom' && pomPlayers.some((p) => p.id === player.id)) ||
-                    (activeModal === 'yellow' && yellowCards.some((p) => p.id === player.id)) ||
-                    (activeModal === 'red' && redCards.some((p) => p.id === player.id))
-                      ? styles.selected
-                      : ''
-                  }`}
-                  onClick={() => handleCardOrPOMSelection(player, activeModal)}
-                >
-                  {player.username}
-                </button>
-              ))}
-          </div>
+        {/* 용병과 불참 유저 제외 */}
+        {players
+          .filter(
+            (player) =>
+              player.id !== 0 && // 용병 제외
+              !absentPlayers.some((absentPlayer) => absentPlayer.id === player.id) // 불참 유저 제외
+          )
+          .map((player) => (
+            <button
+              key={player.id}
+              className={`${styles.playerButton} ${
+                (activeModal === 'pom' && pomPlayers.some((p) => p.id === player.id)) ||
+                (activeModal === 'yellow' && yellowCards.some((p) => p.id === player.id)) ||
+                (activeModal === 'red' && redCards.some((p) => p.id === player.id))
+                  ? styles.selected
+                  : ''
+              }`}
+              onClick={() => handleCardOrPOMSelection(player, activeModal)}
+            >
+              {player.username}
+            </button>
+          ))}
+      </div>
           <div className={styles.modalActions}>
             <button onClick={() => handleSave(activeModal)} className={styles.saveButton}>
               저장
