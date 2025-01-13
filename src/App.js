@@ -21,34 +21,36 @@ import MatchFeedbackPage from "./manager/matchfeedback/MatchFeedbackPage.jsx";
 import FindEmail from "./manager/findemail/findemail.jsx";
 import ResetPassword from "./manager/resetpassword/resetpassword.jsx";
 import UpdatePassword from "./manager/managerinfopage/UpdatePassword.jsx";
+import ManagerHome from "./manager/managerhome/ManagerHome.jsx";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/find-email" element={<FindEmail />} />
+        <Route path="/signup/*" element={<SignupPage />} />
+        <Route path="/find-email/*" element={<FindEmail />} />
 
         <Route element={<MainLayout />}>
           {/* 완료 */}
-          <Route path="/schedule-list" element={<ScheduleList />} />
-          <Route path="/match-detail/:matchId" element={<MatchDetailPage />} />
-          <Route path="/my-matches" element={<MyMatchesPage />} />
-          <Route path="/feedback" element={<MatchFeedbackPage />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/update-password" element={<UpdatePassword />} />
+          <Route path="/schedule-list/*" element={<ScheduleList />} />
+          <Route path="/match-detail/:matchId/*" element={<MatchDetailPage />} />
+          <Route path="/my-matches/*" element={<MyMatchesPage />} />
+          <Route path="/feedback/*" element={<MatchFeedbackPage />} />
+          <Route path="/reset-password/*" element={<ResetPassword />} />
+          <Route path="/update-password/*" element={<UpdatePassword />} />
 
           {/* 미완료 */}
-          <Route path="/manager-info" element={<ManagerInfoPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/reviews" element={<MyReviews />} />
-          <Route path="/team-management" element={<TeamManagementPage />} />
-          <Route path="/player-numbers" element={<PlayerNumberAssignment />} />
-          <Route path="/blacklist" element={<BlacklistManager />} />
-          <Route path="/score-board" element={<ScoreBoardPage />} />
-          <Route path="/video-upload" element={<VideoUploadPage />} />
-          <Route path="/match-cautions" element={<MatchCautionsPage />} />
+          <Route path="/manager-info/*" element={<ManagerInfoPage />} />
+          <Route path="/settings/*" element={<SettingsPage />} />
+          <Route path="/reviews/*" element={<MyReviews />} />
+          <Route path="/team-management/*" element={<TeamManagementPage />} />
+          <Route path="/manager/*" element={<ManagerHome />} />
+          <Route path="/player-numbers/*" element={<PlayerNumberAssignment />} />
+          <Route path="/blacklist/*" element={<BlacklistManager />} />
+          <Route path="/score-board/*" element={<ScoreBoardPage />} />
+          <Route path="/video-upload/*" element={<VideoUploadPage />} />
+          <Route path="/match-cautions/*" element={<MatchCautionsPage />} />
         </Route>
       </Routes>
     </Router>
