@@ -88,7 +88,7 @@ const ManagerInfoPage = () => {
             </div>
             <div className={styles.navButtonContainer}>
               <button
-                onClick={() => navigate("/logout")}
+                onClick={() => navigate("/")}
                 className={styles.navButton}
               >
                 로그아웃
