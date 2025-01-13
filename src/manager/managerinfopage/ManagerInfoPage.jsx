@@ -13,6 +13,31 @@ const ManagerInfoPage = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+ const handleLogout = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8080/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        alert('로그아웃 되었습니다.');
+        localStorage.removeItem('token'); // 토큰 삭제
+        localStorage.removeItem('userId'); // 토큰 삭제
+        navigate('/'); // 메인 페이지로 이동
+      } else {
+        alert(data.message || '로그아웃에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+      alert('로그아웃 중 오류가 발생했습니다.');
+    }
+  };
 
   // 데이터 가져오기
   useEffect(() => {
@@ -88,7 +113,7 @@ const ManagerInfoPage = () => {
             </div>
             <div className={styles.navButtonContainer}>
               <button
-                onClick={() => navigate("/")}
+                onClick={handleLogout}
                 className={styles.navButton}
               >
                 로그아웃
