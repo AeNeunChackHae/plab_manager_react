@@ -51,8 +51,7 @@ const ManagerInfoPage = () => {
           throw new Error("스토리지에 ID가 없습니다.");
         }
 
-        const response = await fetch(
-          `${api}/auth/manager-info`,
+        const response = await fetch(`${api}/auth/manager-info`,
           {
             method: "POST",
             headers: {
