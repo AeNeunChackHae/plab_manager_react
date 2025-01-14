@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ScheduleList.module.css';
+import { config } from "../../config";
 
 // 날짜를 "월 일 요일" 형태로 변환하는 함수
 const formatDate = (dateString) => {
@@ -46,6 +47,7 @@ const LEVEL_MAP = {
 };
 
 const ScheduleList = () => {
+  const api = config.aws.ec2_host_manager
   const [schedules, setSchedules] = useState([]); // 전체 일정 데이터
   const [filteredSchedules, setFilteredSchedules] = useState([]); // 필터링된 일정 데이터
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
@@ -70,7 +72,7 @@ const ScheduleList = () => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await fetch('http://localhost:9090/schedule-list', {
+        const response = await fetch(`${api}/schedule-list`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

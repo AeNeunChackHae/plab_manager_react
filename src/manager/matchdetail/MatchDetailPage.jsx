@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './MatchDetailPage.module.css';
+import { config } from "../../config";
 
 // 날짜를 "월 일 요일" 형식으로 포맷하는 함수
 const formatDateToDay = (dateTimeString) => {
@@ -22,6 +23,7 @@ const getTime24HourFormat = (dateString) => {
 };
 
 const MatchDetail = () => {
+  const api = config.aws.ec2_host_manager
   const { matchId } = useParams(); // URL에서 matchId 가져오기
   const [match, setMatch] = useState(null); // 매치 데이터 상태
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태
@@ -37,7 +39,7 @@ const MatchDetail = () => {
           matchId,
         });
 
-        const response = await fetch('http://localhost:9090/match/match-detail/matchId', {
+        const response = await fetch(`${api}/match/match-detail/matchId`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -79,7 +81,7 @@ const MatchDetail = () => {
     if (!confirmApply) return;
 
     try {
-      const response = await fetch('http://localhost:9090/match/match-apply', {
+      const response = await fetch(`${api}/match/match-apply`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

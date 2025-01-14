@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../signuppage/SignupPage.module.css"; // 동일한 스타일 재사용
+import { config } from "../../config";
 
 const ResetPassword = () => {
+  const api = config.aws.ec2_host_manager
   const [formData, setFormData] = useState({
     name: "",
     phoneNumber: "",
@@ -23,7 +25,7 @@ const ResetPassword = () => {
 
   const handleResetPassword = async () => {
     try {
-      const response = await fetch("http://localhost:9090/auth/find-password", {
+      const response = await fetch(`${api}/auth/find-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

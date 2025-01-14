@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SignupPage.module.css';
+import { config } from "../../config";
+
 
 const SignupPage = () => {
+  const api = config.aws.ec2_host_manager
   const [formData, setFormData] = useState({
     manager_name: '',
     email: '',
@@ -33,7 +36,7 @@ const SignupPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:9090/auth/signup', {
+      const response = await fetch(`${api}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
