@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./UpdatePassword.css";
+import { config } from "../../config";
 
 const PasswordChange = () => {
+  const api = config.aws.ec2_host_manager
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -18,8 +20,7 @@ const PasswordChange = () => {
           throw new Error("스토리지에서 ID를 찾을 수 없습니다.");
         }
 
-        const response = await fetch(
-          "http://127.0.0.1:9090/auth/manager-info",
+        const response = await fetch(`${api}/auth/manager-info`,
           {
             method: "POST",
             headers: {
@@ -68,8 +69,7 @@ const PasswordChange = () => {
     }
 
     try {
-      const response = await fetch(
-        "http://127.0.0.1:9090/auth/update-password",
+      const response = await fetch(`${api}/auth/update-password`,
         {
           method: "POST",
           headers: {

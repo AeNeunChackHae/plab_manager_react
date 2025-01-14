@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../playernumberassignment/PlayerNumberAssignment.module.css';
+import { config } from "../../config";
+
 
 const PlayerNumberAssignment = () => {
+  
+  const api = config.aws.ec2_host_manager
   const location = useLocation();
   const { matchId } = location.state || {}; // 전달된 match_id 가져오기
   const navigate = useNavigate(); // useNavigate 사용
@@ -29,12 +33,13 @@ const PlayerNumberAssignment = () => {
   const [pomPlayers, setPomPlayers] = useState([]);
   const [yellowCards, setYellowCards] = useState([]);
   const [redCards, setRedCards] = useState([]);
+  
   // 서버에서 players 데이터를 가져오기 (POST /api/match/players)
 
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await fetch('http://localhost:9090/match/players', {
+        const response = await fetch(`${api}/match/players`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

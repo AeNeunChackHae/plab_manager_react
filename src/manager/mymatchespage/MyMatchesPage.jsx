@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyMatchesPage.module.css";
+import { config } from "../../config";
 
 // 날짜 유틸리티 함수
 const getLocalDateString = (dateString) => {
@@ -25,6 +26,8 @@ const REGION_MAP = { 0: "서울", 1: "부산", 2: "대구" };
 const LEVEL_MAP = { 0: "모든 레벨", 1: "아마추어1 이하", 2: "아마추어2 이상" };
 
 const MyMatchesPage = () => {
+    
+    const api = config.aws.ec2_host_manager
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [schedules, setSchedules] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +44,7 @@ const MyMatchesPage = () => {
             }
 
             try {
-                const response = await fetch("http://localhost:9090/my-match/my", {
+                const response = await fetch(`${api}/my-match/my`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -122,7 +125,7 @@ const MyMatchesPage = () => {
         if (!confirmCancel) return;
 
         try {
-            const response = await fetch("http://localhost:9090/my-match/cancel", {
+            const response = await fetch(`${api}/my-match/cancel`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
