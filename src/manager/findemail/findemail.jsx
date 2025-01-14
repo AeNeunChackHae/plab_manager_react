@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../signuppage/SignupPage.module.css"; // 회원가입 페이지와 유사한 스타일 적용
+import { config } from '../../config';
 
 const FindEmail = () => {
+  const api = config.aws.ec2_host_manager
   const [formData, setFormData] = useState({
     username: "",
     phoneNumber: "",
@@ -11,7 +13,7 @@ const FindEmail = () => {
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
   const navigate = useNavigate();
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -22,7 +24,7 @@ const FindEmail = () => {
 
   const handleFindEmail = async () => {
     try {
-      const response = await fetch("http://localhost:9090/auth/find-email", {
+      const response = await fetch(`${api}/auth/find-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

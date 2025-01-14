@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ManagerInfoPage.module.css";
+import { config } from "../../config";
 
 const ManagerInfoPage = () => {
+  const api = config.aws.ec2_host_manager
   const navigate = useNavigate();
 
   // 상태 관리
@@ -16,7 +18,7 @@ const ManagerInfoPage = () => {
   
  const handleLogout = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/auth/logout', {
+      const response = await fetch(`${api}/auth/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -50,7 +52,7 @@ const ManagerInfoPage = () => {
         }
 
         const response = await fetch(
-          "http://127.0.0.1:9090/auth/manager-info",
+          `${api}/auth/manager-info`,
           {
             method: "POST",
             headers: {
