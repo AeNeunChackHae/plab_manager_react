@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
+import { config } from "../../config";
 
 const LoginPage = () => {
+  const api = config.aws.ec2_host_manager
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +14,7 @@ const LoginPage = () => {
     event.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:9090/auth/login", {
+      const response = await fetch(`${api}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
