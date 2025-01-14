@@ -127,7 +127,7 @@ const PlayerNumberAssignment = () => {
       console.log('저장할 선수 데이터:', playersToSave);
       console.log('불참 처리할 유저:', absentPlayersToUpdate);
 
-      const positionsResponse = await fetch('http://localhost:9090/match/update-positions', {
+      const positionsResponse = await fetch(`${api}/match/update-positions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const PlayerNumberAssignment = () => {
       }
   
       // 레벨 업데이트 요청
-      const levelUpdateResponse = await fetch('http://localhost:9090/match/update-levels', {
+      const levelUpdateResponse = await fetch(`${api}/match/update-level`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ const PlayerNumberAssignment = () => {
       }
   
       // 레벨 업데이트가 완료되었으면 카드 저장 요청
-      const response = await fetch('http://localhost:9090/match/save-cards', {
+      const response = await fetch(`${api}/match/save-cards`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
