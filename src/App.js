@@ -39,13 +39,13 @@ const App = () => {
           <Route path="/feedback/*" element={<MatchFeedbackPage />} />
           <Route path="/reset-password/*" element={<ResetPassword />} />
           <Route path="/update-password/*" element={<UpdatePassword />} />
+          <Route path="/manager/*" element={<ManagerHome />} />
 
           {/* 미완료 */}
           <Route path="/manager-info/*" element={<ManagerInfoPage />} />
           <Route path="/settings/*" element={<SettingsPage />} />
           <Route path="/reviews/*" element={<MyReviews />} />
           <Route path="/team-management/*" element={<TeamManagementPage />} />
-          <Route path="/manager/*" element={<ManagerHome />} />
           <Route path="/player-numbers/*" element={<PlayerNumberAssignment />} />
           <Route path="/blacklist/*" element={<BlacklistManager />} />
           <Route path="/score-board/*" element={<ScoreBoardPage />} />
