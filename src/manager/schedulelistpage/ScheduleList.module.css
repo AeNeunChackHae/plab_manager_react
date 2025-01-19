@@ -145,3 +145,15 @@
     font-weight: bold;
     text-align: center;
 }
+
+@media (max-width: 1024px) {
+    .schedules {
+        justify-content: center; /* ✅ 가운데 정렬 */
+        max-width: 100%; /* ✅ 전체 너비 활용 */
+    }
+
+    .scheduleCard {
+        width: calc(33.333% - 10px); /* ✅ 3개씩 균등하게 배치 */
+        min-width: 250px; /* ✅ 너무 좁아지지 않도록 최소 너비 설정 */
+    }
+}

@@ -200,11 +200,21 @@ const MyMatchesPage = () => {
     const filteredMatches = schedules.find(
         (schedule) => schedule.date === getLocalDateString(selectedDate)
     );
-    const getMatchesForDate = (date) => {
+
+    const getMatchesForDate = (date, isCurrentMonth) => {
+        if (!isCurrentMonth) return 0;
+    
         const matchData = schedules.find(
-            (schedule) => schedule.date === getLocalDateString(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date))
+            (schedule) => {
+                const matchDate = new Date(schedule.date);
+                return (
+                    matchDate.getFullYear() === selectedDate.getFullYear() &&
+                    matchDate.getMonth() === selectedDate.getMonth() &&
+                    matchDate.getDate() === date
+                );
+            }
         );
-        return matchData ? matchData.schedules.length : 0;  // 매치가 있으면 그 수 반환
+        return matchData ? matchData.schedules.length : 0;
     };
     
 
@@ -237,23 +247,23 @@ const MyMatchesPage = () => {
                 </div>
 
                
-<div className={styles.dates}>
-    {calendarDays.map((day, index) => {
-        const matchesCount = getMatchesForDate(day.date); // 해당 날짜의 매치 수를 확인
-        return (
-            <span
-                key={index}
-                className={`${day.isCurrentMonth ? (day.date === selectedDate.getDate() ? styles.selectedDate : "") : styles.otherMonth} ${matchesCount > 0 ? styles.hasMatch : ""}`}
-                onClick={() => (day.isCurrentMonth ? handleDateClick(day.date) : null)}
-                style={{
-                    color: index % 7 === 0 ? "red" : index % 7 === 6 ? "blue" : "inherit",
-                }}
-            >
-                {day.date}
-            </span>
-        );
-    })}
-</div>
+                <div className={styles.dates}>
+                    {calendarDays.map((day, index) => {
+                        const matchesCount = getMatchesForDate(day.date, day.isCurrentMonth); // ✅ 현재 월 여부 추가
+                        return (
+                            <span
+                                key={index}
+                                className={`${day.isCurrentMonth ? (day.date === selectedDate.getDate() ? styles.selectedDate : "") : styles.otherMonth} ${matchesCount > 0 ? styles.hasMatch : ""}`}
+                                onClick={() => (day.isCurrentMonth ? handleDateClick(day.date) : null)} // ✅ 현재 월이 아니면 클릭 방지
+                                style={{
+                                    color: index % 7 === 0 ? "red" : index % 7 === 6 ? "blue" : "inherit",
+                                }}
+                            >
+                                {day.date}
+                            </span>
+                        );
+                    })}
+                </div>
             </div>
 
             {isLoading ? (
