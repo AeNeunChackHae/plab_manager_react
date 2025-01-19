@@ -18,29 +18,31 @@ const Header = () => {
     }
     
     return (
-        <header className="header">
-            <div className="logo">
-                <img 
-                    src="/assets/image/plab_manager_logo_white.png" 
-                    alt="Logo" 
-                    onClick={goToScheduleList}
-                />
-            </div>
-            <div className="icons">
-                <img
-                    src="/assets/image/header_cal.png"
-                    alt="Calendar Icon"
-                    className="calendar-icon"
-                    onClick={goToMyMatches} // 캘린더 페이지로 이동하는 클릭 이벤트 핸들러
-                />
-                <img
-                    src="/assets/image/my.png"
-                    alt="User Icon"
-                    className="user-icon"
-                    onClick={goToManagerInfo} // 마이페이지로 이동하는 클릭 이벤트 핸들러
-                />
-            </div>
-        </header>
+        <div className="header_bg">
+            <header className="header">
+                <div className="logo">
+                    <img 
+                        src="/assets/image/plab_manager_logo_white.png" 
+                        alt="Logo" 
+                        onClick={goToScheduleList}
+                        />
+                </div>
+                <div className="icons">
+                    <img
+                        src="/assets/image/header_cal.png"
+                        alt="Calendar Icon"
+                        className="calendar-icon"
+                        onClick={goToMyMatches} // 캘린더 페이지로 이동하는 클릭 이벤트 핸들러
+                        />
+                    <img
+                        src="/assets/image/my.png"
+                        alt="User Icon"
+                        className="user-icon"
+                        onClick={goToManagerInfo} // 마이페이지로 이동하는 클릭 이벤트 핸들러
+                        />
+                </div>
+            </header>
+        </div>
     );
 };
 

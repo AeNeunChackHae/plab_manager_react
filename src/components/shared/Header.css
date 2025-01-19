@@ -1,4 +1,9 @@
 /* Header 스타일 */
+.header_bg{
+    background-color: black;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
 .header {
     display: flex;
     justify-content: space-between;
@@ -7,6 +12,8 @@
     padding: 10px 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #fff;
+    max-width: 1024px;
+    margin: 0 auto;
 }
 
 .logo {

@@ -158,22 +158,6 @@
     background-color: #d9363e;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-    .match {
-        padding: 10px 15px;
-        margin-bottom: 10px;
-    }
-
-    .matchesContainer {
-        padding: 10px;
-    }
-
-    .match p {
-        font-size: 14px;
-    }
-}
-
 /* 승리 팀 강조 텍스트 */
 .winner {
     font-size: 18px;
@@ -206,3 +190,42 @@
     background-color: blue; /* 관중 수 조건을 만족하는 게임 */
 }
   
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .container{
+        width: 90%;
+    }
+    .match {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .matchesContainer {
+        padding: 10px;
+    }
+
+    .match p {
+        font-size: 14px;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+    .container{
+        width: 85%;
+    }
+    .match {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .matchesContainer {
+        padding: 10px;
+    }
+
+    .match p {
+        font-size: 14px;
+    }
+}

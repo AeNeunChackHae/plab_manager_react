@@ -75,7 +75,7 @@ const PlayerNumberAssignment = () => {
     };
   
     if (matchId) fetchPlayers();
-  }, [matchId]);
+  }, [matchId,api]);
 
   const handleGameEnd = async () => {
     try {
@@ -145,7 +145,8 @@ const PlayerNumberAssignment = () => {
       }
   
       // 레벨 업데이트 요청
-      const levelUpdateResponse = await fetch(`${api}/match/update-level`, {
+      console.log(api)
+      const levelUpdateResponse = await fetch(`${api}/match/update-levels`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
